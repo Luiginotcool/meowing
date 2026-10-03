@@ -12,5 +12,8 @@
         let filename = rand < percent ? "scary.png" : "meowing.jpg";
         let image = document.getElementById("image");
         image.src=filename
+        if (rand < percent) {
+            window.alert("Your brain has been infected by a virus. I will remove it")
+        }
     </script>
 </html>
