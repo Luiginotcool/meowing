@@ -61,7 +61,7 @@ function loop(timestamp) {
     let c = 4;
     let dx = (131+c)*ScaleFactor*fps*dt / 5000;
     catPosX += dx;
-    if (catPosX > pageWidth+5) {
+    if (catPosX > window.innerWidth+5) {
         catPosX = -2-SpriteWidth;
     }
     //console.log(catPosX, "CAT POSITION")

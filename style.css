@@ -33,6 +33,7 @@ body {
 html, body {
     max-width: 100%;
     overflow-x: hidden;
+    min-height: 100dvh;
 }
 
 
@@ -81,8 +82,8 @@ height:calc(var(--nav-height)*1px);
     padding-left: 20%; 
     padding-right: 20%; 
     padding-top:50px;
+    min-height: 100dvh;
     background-image: url("./assets/bg2.png");
-
     background-color: #7092be;
 }
 
@@ -119,7 +120,7 @@ height:calc(var(--nav-height)*1px);
     height: calc(var(--sprite-height)*1px);
     background-image: url("./assets/cat-animation.png");
     background-size: calc(var(--spritesheet-width)*1px);
-    position: absolute;
+    position:relative;
 }
 
 .mirror-H {
