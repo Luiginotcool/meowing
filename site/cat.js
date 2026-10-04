@@ -30,7 +30,7 @@ function main() {
     let i = 0;
 
     window.setInterval(() => {
-        console.log("Frame: ", i)
+        //console.log("Frame: ", i)
         SetSprite(0, i, animationElement);
         i++;
         i=i%12;
@@ -64,9 +64,9 @@ function loop(timestamp) {
     if (catPosX > pageWidth+5) {
         catPosX = -2-SpriteWidth;
     }
-    console.log(catPosX, "CAT POSITION")
+    //console.log(catPosX, "CAT POSITION")
     setCatPosition(catPosX, animationElement);
-    console.log(ScaleFactor, fps, dt);
+    //console.log(ScaleFactor, fps, dt);
 
     frames++;
     oldTime = timestamp;
@@ -85,12 +85,16 @@ function SetSprite(x, y, animationElement) {
     }
 
     let sheetCoord = getSpritesheetCoordFromSpriteIndex(x, y, SpriteWidth, SpriteHeight);
-    console.log(sheetCoord)
+    //console.log(sheetCoord)
     //console.log(SpriteWidth, SpriteHeight, SpritesheetWidth)
     animationElement.style.backgroundPositionX = `${sheetCoord.x}px`;
     animationElement.style.backgroundPositionY = `${sheetCoord.y}px`;
     
 }
+
+
+
+
 
 
 

@@ -81,6 +81,8 @@ height:calc(var(--nav-height)*1px);
     padding-left: 20%; 
     padding-right: 20%; 
     padding-top:50px;
+    background-image: url("./assets/bg2.png");
+
     background-color: #7092be;
 }
 
