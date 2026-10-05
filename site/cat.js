@@ -15,6 +15,8 @@ let catPosX = 0;
 let oldTime = 0;
 let pageWidth;
 
+
+
 function main() {
     animationElement = document.getElementById("cat-animation");
     [SpriteWidth, SpriteHeight, SpritesheetWidth, ScaleFactor] = setup();

@@ -1,0 +1,29 @@
+
+
+#game-container {
+    /*background-image: url("./assets/catnip.webp");*/
+    display: inline-block;
+
+}
+
+#game-image {
+    width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+#main-body {
+    width: fit-content;
+    margin: auto;
+    
+}
+
+#body-container {
+    padding: 5%;
+}
+
+#game-canvas {
+    width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+}
