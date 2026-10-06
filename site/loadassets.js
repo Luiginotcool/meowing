@@ -9,7 +9,8 @@ filenamesArray = [
 
 plantnamesArray = [
     "shroom",
-    "tomato"
+    "tomato",
+    "citridora"
 ]
 
 plantnamesArray.forEach((plantName) => {

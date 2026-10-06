@@ -249,9 +249,10 @@ class Pot {
     draw() {
         //console.log(this.grow_stage, this.plant_base_coord)
         let baseScreen = toScreenCoord(this.plant_base_coord);
+        let scale = 1.5;
         if (this.grow_stage > 1) {
             let sprite = this.seed_type.getSprite(this.grow_stage);
-            ctx.drawImage(sprite, baseScreen.x-(2*sprite.width/2), baseScreen.y - (2*sprite.height), 200, 300);
+            ctx.drawImage(sprite, baseScreen.x-(scale*sprite.width/2), baseScreen.y - (scale*sprite.height), 100*scale, 150*scale);
         }
         
         switch (this.grow_stage) {
@@ -357,6 +358,7 @@ function gamesetup() {
     Seed.seeds = [
         new Seed("tomato", "tomato", 0),
         new Seed("mushroom", "shroom", 1),
+        new Seed("citridora", "citridora", 2)
     ];
 
 
