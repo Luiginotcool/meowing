@@ -94,19 +94,19 @@ let bbox_data_array = [
 let plant_base_array = [
   {
     "x": 0.2009109874368418,
-    "y": 0.799543118218161
+    "y": 0.805543118218161
   },
   {
     "x": 0.3737535280994189,
-    "y": 0.7652769845802398
+    "y": 0.7752769845802398
   },
   {
     "x": 0.5214821953323908,
-    "y": 0.7675613934894346
+    "y": 0.7785613934894346
   },
   {
     "x": 0.6588698558590548,
-    "y": 0.7607081667618504
+    "y": 0.7657081667618504
   },
   {
     "x": 0.8169395297983347,
@@ -129,6 +129,9 @@ let plant_base_array = [
     "y": 0.3792118789263278
   }
 ]
+
+
+
 
 class Coord {
     x;
@@ -183,26 +186,23 @@ class Pot {
         this.bbox = bbox;
         this.id = id;
         this.has_seed = false;
-        this.seed_type = 0;
+        this.seed_type = Seed.None;
         this.grow_stage = 0;
         this.plant_base_coord = plant_base_coord;
-        Pot.seed_types = {
-            camphor: 0,
-            mushroom: 1,
-            citridora: 2,
-            mint: 3,
-            tomato: 4,
-        }
-        Pot.seed_names = Object.keys(Pot.seed_types);
+        Pot.seed_types = Seed.seeds;
     }
 
     static randomSeedType() {
-        let r = Math.floor(Math.random() * Object.keys(Pot.seed_types).length);
-        return r;
+        let r = Math.floor(Math.random() * Pot.seed_types.length);
+        return Pot.seed_types[r];
     }
 
     getSeedName(seed_type) {
-        return Pot.seed_names[seed_type];
+        return seed_type.name;
+    }
+
+    getSeedId(seed_type) {
+        return seed_type.id;
     }
 
 
@@ -210,7 +210,7 @@ class Pot {
         this.has_seed = false;
         this.grow_stage = 0;
         console.log("You got some ", this.getSeedName(this.seed_type));
-        player.plants[this.seed_type] += 1;
+        player.plants[this.getSeedId(this.seed_type)] += 1;
     }
 
     clicked() {
@@ -228,10 +228,11 @@ class Pot {
                 this.grow_stage+= 1;
             }
         }
-        console.log(this.grow_stage, this.id);
+        console.log("Growth stage: ", this.grow_stage, this.id);
     }
 
     addSeed(seed_type) {
+        console.log("Add seed ", seed_type)
         this.seed_type = seed_type;
         this.grow_stage = 1;
         this.has_seed = true;
@@ -239,6 +240,7 @@ class Pot {
     }
 
     setSeed(seed_type) {
+        console.log("Set seed ", seed_type)
         this.seed_type = seed_type;
         this.grow_stage = 1;
         this.has_seed = true;
@@ -247,6 +249,11 @@ class Pot {
     draw() {
         //console.log(this.grow_stage, this.plant_base_coord)
         let baseScreen = toScreenCoord(this.plant_base_coord);
+        if (this.grow_stage > 1) {
+            let sprite = this.seed_type.getSprite(this.grow_stage);
+            ctx.drawImage(sprite, baseScreen.x-(2*sprite.width/2), baseScreen.y - (2*sprite.height), 200, 300);
+        }
+        
         switch (this.grow_stage) {
             case 0:
                 break;
@@ -254,15 +261,39 @@ class Pot {
                 fillNormCircle(this.plant_base_coord, 5);
                 break;
             case 2:
-                ctx.fillRect(baseScreen.x-5, baseScreen.y, 5, -15);
                 break;
             case 3:
-                ctx.fillRect(baseScreen.x-5, baseScreen.y, 5, -25);
-                break;
-            case 4:
-                ctx.fillRect(baseScreen.x-5, baseScreen.y, 5, -55);
+                //ctx.fillRect(baseScreen.x-5, baseScreen.y, 5, -25);
                 break;
         }
+    }
+}
+
+class Seed {
+    name;
+    id;
+    filename;
+    static seeds;
+    static None = new Seed("none", "none", -1);
+
+    constructor(name, filename, id) {
+        this.name = name;
+        this.id = id;
+        this.filename = filename;
+    }
+
+
+    getSprite(grow_stage) {
+        if (this.id == -1){
+            return new Image();
+        }
+        let img = new Image();
+        img.src = `../assets/plants/${this.filename} growth stage ${grow_stage-1}.png`;
+        img = document.getElementById(`${this.filename} growth stage ${grow_stage-1}.png`)
+
+        console.log("Drawing sprite ", `../assets/plants/${this.filename} growth stage ${grow_stage-1}.png`)
+        console.log(img)
+        return img;
     }
 }
 
@@ -272,7 +303,7 @@ class Player {
 
     constructor() {
         this.seeds = 2;
-        this.plants = new Array(Object.keys(Pot.seed_types).length);
+        this.plants = new Array(Seed.seeds.length);
         this.plants.fill(0); 
     }
 }
@@ -322,7 +353,12 @@ function gamesetup() {
 
     infoText = document.getElementById("ui")
 
-    drawBackground();
+    // new Seed(name, filename, id)
+    Seed.seeds = [
+        new Seed("tomato", "tomato", 0),
+        new Seed("mushroom", "shroom", 1),
+    ];
+
 
 
     player = new Player();
@@ -341,16 +377,19 @@ function gamesetup() {
         //console.log("PLANT BASE", pot)
         let r = Math.random();
         if (r < 0.2) {
-            pot.setSeed(Pot.randomSeedType);
+            pot.setSeed(Pot.randomSeedType());
         }
         potArray.push(pot);
     })
-
     console.log(potArray);
+
+    
+
+
 
 
     writeInfo(player);
-
+    drawBackground();
     window.requestAnimationFrame(gameloop);
 }
 
@@ -372,9 +411,9 @@ function writeInfo(player) {
     let infoString = 
     `Weed: ${player.weed} \nMushroom: ${player.mushroom} \nSeeds: ${player.seeds}`;
 
-        infoString = ""
-    Object.keys(Pot.seed_types).forEach((seed_name, i) => {
-        infoString+=`${seed_name}: ${player.plants[i]}\n`
+    infoString = "";
+    Seed.seeds.forEach((seed_type, i) => {
+        infoString+=`${seed_type.name}: ${player.plants[i]}\n`
     })
     infoText.innerHTML = infoString
 }
