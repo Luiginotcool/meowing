@@ -269,32 +269,25 @@ class Pot {
             }
         }
         if (player.cursorItem.name == "milk can") {
-            if (this.seed_type.name = "mushroom") {
+            console.log("Milk can part ", this.grow_stage)
+            if (this.seed_type.name == "mushroom") {
                 if (this.grow_stage == 3) {
                     this.grow_stage = 4+Math.floor(Math.random()*3);
                     return;
                 }
-                if (this.grow_stage > 3) {
-                    if (player.cursorItem.name == "shears") {
-                        this.harvest();
-                    }
-                } else {
+                if (this.grow_stage < 3) {
                     this.grow_stage += 1;
                 }
                 return;
-            }
-            if (this.grow_stage == 4) {
-                if (player.cursorItem.name == "shears") {
-                    this.harvest();
-                }
-                
-            }
+            } 
             else {
-                this.grow_stage+= 1;
+                if (this.grow_stage < 4) {
+                    console.log("Grow from ", this.grow_stage, this.grow_stage+1)
+                    this.grow_stage += 1;
+                }
+
             }
         }
-
-    
         //console.log("Growth stage: ", this.grow_stage, this.id);
     }
 
@@ -462,10 +455,10 @@ let numCursorItems = 3;
 
 let cursorItemBboxArray = []
 for (let i = 0; i < numCursorItems; i++) {
-    let x1 = cursorItemPadding + cursorItemGridPadding + (cursorItemWidth-20 + cursorItemPadding)*i;
-    let x2 = x1 + cursorItemWidth-19;
+    let x1 = cursorItemPadding + cursorItemGridPadding + (cursorItemWidth + cursorItemPadding)*i;
+    let x2 = x1 + cursorItemWidth;
     let y1 = cursorItemGridPadding + cursorItemPadding - 5 ;
-    let y2 = y1 + cursorItemHeight-25;
+    let y2 = y1 + cursorItemHeight;
     let c1 = new Coord(x1, y1);
     let c2 = new Coord(x2, y2);
     cursorItemBboxArray.push(new BoundingBox(c1, c2));
@@ -533,14 +526,17 @@ function gamesetup() {
     ];
 
     Seed.seed_distribution = {
-        tomato: 1,
-        mushroom: 1000,
+        tomato: 15,
+        mushroom: 5,
         citridora: 10
     }
 
     cursorItemBboxArray_norm = []
     cursorItemBboxArray.forEach((bbox) => {
-        cursorItemBboxArray_norm.push(bbox.normalise());
+        cursorItemBboxArray_norm.push(new BoundingBox(
+            normaliseCoordScreen(bbox.c1),
+            normaliseCoordScreen(bbox.c2)
+        ));
     })
 
 
@@ -553,7 +549,7 @@ function gamesetup() {
             "seed bag", "seed bag", cursorItemBboxArray_norm[1], true, new Coord(42, 30), 1
         ),
         new CursorItem(
-            "shears", "shears", cursorItemBboxArray_norm[2], false, new Coord(40, 40), 2
+            "shears", "shears", cursorItemBboxArray_norm[2], false, new Coord(80, 65), 2
         )
     ]
 
@@ -735,6 +731,12 @@ function normaliseCoord(coord) {
     let { width, height } = canvas.getBoundingClientRect();
     let x = coord.x / width;
     let y = coord.y / height;
+    return new Coord(x, y);
+}
+
+function normaliseCoordScreen(coord) {
+    let x = coord.x / canvas.width;
+    let y = coord.y / canvas.height;
     return new Coord(x, y);
 }
 
