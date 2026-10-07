@@ -612,9 +612,12 @@ function drawUI() {
     // Draw Cursor Items
 
 
+    let cursorItemBackgroundWidth = (cursorItemWidth + cursorItemPadding)*(numCursorItems);
+
     // Draw Items Grid
-    ctx.fillStyle = "#aaaaaa"
-    ctx.fillRect(cursorItemGridPadding, cursorItemGridPadding, 350, 100)
+    ctx.fillStyle = "#aaaaaa";
+    ctx.fillRect(cursorItemGridPadding, cursorItemGridPadding, cursorItemBackgroundWidth, 100)
+
 
     CursorItem.cursorItem_array.forEach((cursorItem) => {
         let corner = toScreenCoord(cursorItem.bbox.c1);    
