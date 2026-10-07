@@ -133,6 +133,9 @@ let plant_base_array = [
 
 
 
+
+
+
 class Coord {
     x;
     y;
@@ -146,6 +149,7 @@ class Coord {
 class BoundingBox {
     c1;
     c2;
+    static zero = new BoundingBox(new Coord(0, 0), new Coord(0, 0));
 
     constructor(c1, c2) {
         this.c1 = c1;
@@ -154,6 +158,14 @@ class BoundingBox {
 
     toScreen() {
         return new BoundingBox(toScreenCoord(this.c1), toScreenCoord(this.c2));
+    }
+
+    normalise() {
+        return new BoundingBox(normaliseCoord(this.c1), normaliseCoord(this.c2));
+    }
+
+    draw() {
+        ctx.strokeRect(this.c1.x, this.c1.y, this.c2.x - this.c1.x, this.c2.y - this.c1.y);
     }
 
     containsPoint(coord) {
@@ -193,7 +205,35 @@ class Pot {
     }
 
     static randomSeedType() {
-        let r = Math.floor(Math.random() * Pot.seed_types.length);
+        
+
+        let distrib = Seed.seed_distribution;
+
+
+        let total = 0;
+        Seed.seeds.forEach((seed) => {
+            total += distrib[seed.name];
+        })
+
+        Seed.seeds.forEach((seed) => {
+            let v = distrib[seed.name];
+            distrib[seed.name] = v / total;
+        })
+
+        let r = Math.random();
+        let cm = 0;
+        let randomSeed;
+        let numSeeds = Seed.seeds.length;
+        for (let i = 0; i < numSeeds; i++) {
+            let seed = Seed.seeds[i];
+            cm += distrib[seed.name];
+            if (r <= cm) {
+                return seed;
+            }
+        }
+        
+
+
         return Pot.seed_types[r];
     }
 
@@ -215,24 +255,51 @@ class Pot {
 
     clicked() {
         //console.log("Pot ", this.id, " was clicked!")
+        console.log(player.cursorItem.name)
         if (this.grow_stage == 0) {
-            this.addSeed(Pot.randomSeedType());
-            console.log("Added new seed to ", this.id, ": ", this.seed_type, ". ", this.grow_stage)
+            if (player.cursorItem.name == "seed bag") {
+                this.addSeed(Pot.randomSeedType());
+            }
+            //console.log("Added new seed to ", this.id, ": ", this.seed_type, ". ", this.grow_stage)
             return;
         } 
-        else {
-            if (this.grow_stage == 4) {
+        if (player.cursorItem.name == "shears") {
+            if (this.grow_stage > 3) {
                 this.harvest();
+            }
+        }
+        if (player.cursorItem.name == "milk can") {
+            if (this.seed_type.name = "mushroom") {
+                if (this.grow_stage == 3) {
+                    this.grow_stage = 4+Math.floor(Math.random()*3);
+                    return;
+                }
+                if (this.grow_stage > 3) {
+                    if (player.cursorItem.name == "shears") {
+                        this.harvest();
+                    }
+                } else {
+                    this.grow_stage += 1;
+                }
+                return;
+            }
+            if (this.grow_stage == 4) {
+                if (player.cursorItem.name == "shears") {
+                    this.harvest();
+                }
+                
             }
             else {
                 this.grow_stage+= 1;
             }
         }
-        console.log("Growth stage: ", this.grow_stage, this.id);
+
+    
+        //console.log("Growth stage: ", this.grow_stage, this.id);
     }
 
     addSeed(seed_type) {
-        console.log("Add seed ", seed_type)
+        //console.log("Add seed ", seed_type)
         this.seed_type = seed_type;
         this.grow_stage = 1;
         this.has_seed = true;
@@ -240,7 +307,7 @@ class Pot {
     }
 
     setSeed(seed_type) {
-        console.log("Set seed ", seed_type)
+        //console.log("Set seed ", seed_type)
         this.seed_type = seed_type;
         this.grow_stage = 1;
         this.has_seed = true;
@@ -249,23 +316,18 @@ class Pot {
     draw() {
         //console.log(this.grow_stage, this.plant_base_coord)
         let baseScreen = toScreenCoord(this.plant_base_coord);
-        let scale = 1.5;
+        let scale = 1;
         if (this.grow_stage > 1) {
             let sprite = this.seed_type.getSprite(this.grow_stage);
+            console.log(this)
             ctx.drawImage(sprite, baseScreen.x-(scale*sprite.width/2), baseScreen.y - (scale*sprite.height), 100*scale, 150*scale);
+            console.log("Drawing at ", sprite, baseScreen.x-(scale*sprite.width/2), baseScreen.y - (scale*sprite.height), 100*scale, 150*scale)
+            console.log(sprite.width, sprite.height)
         }
         
-        switch (this.grow_stage) {
-            case 0:
-                break;
-            case 1:
-                fillNormCircle(this.plant_base_coord, 5);
-                break;
-            case 2:
-                break;
-            case 3:
-                //ctx.fillRect(baseScreen.x-5, baseScreen.y, 5, -25);
-                break;
+        if (this.grow_stage == 1) {
+            ctx.fillStyle = "black"
+            fillNormCircle(this.plant_base_coord, 5);
         }
     }
 }
@@ -275,6 +337,7 @@ class Seed {
     id;
     filename;
     static seeds;
+    static seed_distribution;
     static None = new Seed("none", "none", -1);
 
     constructor(name, filename, id) {
@@ -289,29 +352,126 @@ class Seed {
             return new Image();
         }
         let img = new Image();
-        img.src = `../assets/plants/${this.filename} growth stage ${grow_stage-1}.png`;
-        img = document.getElementById(`${this.filename} growth stage ${grow_stage-1}.png`)
+        img = document.getElementById(`plants/${this.filename} growth stage ${grow_stage-1}.png`)
 
         console.log("Drawing sprite ", `../assets/plants/${this.filename} growth stage ${grow_stage-1}.png`)
         console.log(img)
         return img;
     }
+
+    static fromName(seedName) {
+        Seed.seeds.forEach((seed) => { 
+            if (seed.name == seedName) { return seed; }
+        })
+    }
 }
 
 class Player {
+    cursorState;
     seeds;
     plants;
+    cursorItem;
 
     constructor() {
         this.seeds = 2;
         this.plants = new Array(Seed.seeds.length);
         this.plants.fill(0); 
+        this.cursorItem = CursorItem.none;
+        this.cursorState = cursorStates.empty;
+    }
+
+    handleCursorState() {
+
     }
 }
 
-const MAKE_BBOX = false;
+
+class CursorItem {
+    name;
+    id;
+    filename;
+    animationStep;
+    animated;
+    bbox;
+    grabPos;
+    static cursorItem_array;
+    static none = new CursorItem("none", "", BoundingBox.zero, false, new Coord(0,0), -1);
+    constructor(name, filename, bbox, animated, grabPos, id) {
+        this.name = name;
+        this.filename = filename;
+        this.bbox = bbox;
+        this.id = id;
+        this.animated = animated;
+        this.animationStep = 1;
+        this.grabPos = grabPos;
+    }
+
+
+    draw(x, y) {
+        let img = this.getSprite();
+        ctx.drawImage(img, x, y);
+    }
+
+    drawThumb(x, y, width, height) {
+        let fn = `${this.filename} thumb.png`;
+        let img = document.getElementById(fn);
+        ctx.drawImage(img, x, y, width, height);
+    }
+
+    getSprite() {
+        let fn;
+        if (this.animated) {
+            fn = `${this.filename} ${this.animationStep}.png`;
+        } else {
+            fn = `${this.filename}.png`;
+        }
+        return document.getElementById(fn);
+    }
+
+    clicked() {
+        console.log("Click!")
+        switch (player.cursorState) {
+            case cursorStates.empty:
+                player.cursorItem = this;
+                player.cursorState = cursorStates.holdingItem;
+                break;
+            case cursorStates.holdingItem:
+                if (player.cursorItem == this) {
+                    player.cursorItem = CursorItem.none;
+                    player.cursorState = cursorStates.empty;
+                } 
+                else {
+                    player.cursorItem = this;
+                    player.cursorState = cursorStates.holdingItem;
+                }
+                break;
+        }
+    }
+}
+
+
+
+const MAKE_BBOX = true;
 const MAKE_POS_ARRAY = false;
 
+let cursorItemPadding = 3;
+let cursorItemGridPadding = 10;
+let cursorItemWidth = 100;
+let cursorItemHeight = 100;
+let numCursorItems = 3;
+
+let cursorItemBboxArray = []
+for (let i = 0; i < numCursorItems; i++) {
+    let x1 = cursorItemPadding + cursorItemGridPadding + (cursorItemWidth-20 + cursorItemPadding)*i;
+    let x2 = x1 + cursorItemWidth-19;
+    let y1 = cursorItemGridPadding + cursorItemPadding - 5 ;
+    let y2 = y1 + cursorItemHeight-25;
+    let c1 = new Coord(x1, y1);
+    let c2 = new Coord(x2, y2);
+    cursorItemBboxArray.push(new BoundingBox(c1, c2));
+}
+
+console.log("cursor item bbox array", cursorItemBboxArray)
 let pot1 = new Pot(bbox_data_array[0]);
 
 
@@ -327,6 +487,10 @@ let posArray = [];
 let ctx;
 let canvas;
 let infoText;
+let mouseX = 0;
+let mouseY = 0;
+let normMouseCoord = new Coord(0, 0);
+
 
 let player;
 
@@ -335,6 +499,12 @@ let boundingBoxStates = {
     noClick: 0,
     clickedOnce: 1,
     clickedTwice: 2
+}
+
+let cursorStates = {
+    empty: 0,
+    holdingItem: 1,
+    usingItem: 2
 }
 
 potArray = [];
@@ -349,7 +519,8 @@ function gamesetup() {
     ctx = canvas.getContext("2d");
 
     console.log(ctx);
-    canvas.onclick = handleClick
+    canvas.onclick = handleClick;
+    canvas.onmousemove = handleMouseMove;
     console.log(bbox_data_array)
 
     infoText = document.getElementById("ui")
@@ -360,6 +531,31 @@ function gamesetup() {
         new Seed("mushroom", "shroom", 1),
         new Seed("citridora", "citridora", 2)
     ];
+
+    Seed.seed_distribution = {
+        tomato: 1,
+        mushroom: 1000,
+        citridora: 10
+    }
+
+    cursorItemBboxArray_norm = []
+    cursorItemBboxArray.forEach((bbox) => {
+        cursorItemBboxArray_norm.push(bbox.normalise());
+    })
+
+
+    // constructor(name, filename, bbox, animated, grabPos, id)
+    CursorItem.cursorItem_array = [
+        new CursorItem(
+            "milk can", "milk can", cursorItemBboxArray_norm[0], true, new Coord(140, 45), 0
+        ),
+        new CursorItem(
+            "seed bag", "seed bag", cursorItemBboxArray_norm[1], true, new Coord(42, 30), 1
+        ),
+        new CursorItem(
+            "shears", "shears", cursorItemBboxArray_norm[2], false, new Coord(40, 40), 2
+        )
+    ]
 
 
 
@@ -392,8 +588,64 @@ function gamesetup() {
 
     writeInfo(player);
     drawBackground();
+    drawUI();
     window.requestAnimationFrame(gameloop);
 }
+
+
+
+
+function draw() {
+    // Draw background
+    // Draw Pots
+    // Draw Cursor Items
+    // Draw UI
+
+    drawBackground();
+    potArray.forEach((pot) => {
+        pot.draw();
+    });
+
+    drawUI();
+    
+}
+
+
+function drawUI() {
+    // Get Images
+    // Draw Cursor Items
+
+
+    // Draw Items Grid
+    ctx.fillStyle = "#aaaaaa"
+    ctx.fillRect(cursorItemGridPadding, cursorItemGridPadding, 350, 100)
+
+    CursorItem.cursorItem_array.forEach((cursorItem) => {
+        let corner = toScreenCoord(cursorItem.bbox.c1);    
+        if(!(player.cursorItem == cursorItem)) {
+            cursorItem.drawThumb(corner.x, corner.y, cursorItemWidth, cursorItemHeight);
+        }
+        cursorItem.bbox.toScreen().draw();
+    })
+
+    CursorItem.cursorItem_array.forEach((cursorItem) => {
+        if (player.cursorItem == cursorItem) {
+
+            switch (player.cursorState) {
+                case cursorStates.holdingItem:
+                    let screenMouseCoord = toScreenCoord(normMouseCoord);
+                    cursorItem.draw(screenMouseCoord.x-cursorItem.grabPos.x, screenMouseCoord.y-cursorItem.grabPos.y)
+                    break;
+                case cursorStates.usingItem:
+                    break;
+                    
+            }
+
+        }
+    })
+ 
+}
+
 
 
 function drawBackground() {
@@ -404,6 +656,8 @@ function drawBackground() {
 
 function gameloop(timestamp) {
 
+
+    draw();
     window.requestAnimationFrame(gameloop);
 }
 
@@ -417,6 +671,7 @@ function writeInfo(player) {
     Seed.seeds.forEach((seed_type, i) => {
         infoString+=`${seed_type.name}: ${player.plants[i]}\n`
     })
+    infoString += `<br/> Debug: ${player.cursorItem.name == "shears"}   Item: ${player.cursorItem.name}`
     infoText.innerHTML = infoString
 }
 
@@ -428,6 +683,7 @@ function handleClick(event) {
     //console.log(x, y);
 
     let normalCoord = normaliseCoord(new Coord(x, y));
+    let coord = new Coord(x, y);
     //console.log(normalCoord);
     
     if (MAKE_BBOX) {
@@ -438,8 +694,22 @@ function handleClick(event) {
     }
 
     handlePots(normalCoord);
+    handleCursorItem(normalCoord);
+
+    drawUI();
+
+
 
     writeInfo(player);
+}
+
+function handleMouseMove(event) {
+    let x = event.offsetX;
+    let y = event.offsetY;
+    let normalCoord = normaliseCoord(new Coord(x, y));
+    mouseX = normalCoord.x;
+    mouseY = normalCoord.y;
+    normMouseCoord = normalCoord;
 }
 
 function handlePots(coord) {
@@ -449,6 +719,14 @@ function handlePots(coord) {
             pot.clicked();
         } 
         pot.draw();
+    })
+}
+
+function handleCursorItem(coord) {
+    CursorItem.cursorItem_array.forEach((cursorItem) => {
+        if (cursorItem.bbox.containsPoint(coord)) {
+            cursorItem.clicked();
+        }
     })
 }
 

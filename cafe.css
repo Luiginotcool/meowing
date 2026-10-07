@@ -23,7 +23,9 @@
 }
 
 #game-canvas {
+    display: block;
     width: 100%;
     max-height: 90vh;
     object-fit: contain;
 }
+
