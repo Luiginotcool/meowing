@@ -522,13 +522,15 @@ function gamesetup() {
     Seed.seeds = [
         new Seed("tomato", "tomato", 0),
         new Seed("mushroom", "shroom", 1),
-        new Seed("citridora", "citridora", 2)
+        new Seed("citridora", "citridora", 2),
+        new Seed("catmint", "catmint", 3),
     ];
 
     Seed.seed_distribution = {
         tomato: 15,
         mushroom: 5,
-        citridora: 10
+        citridora: 10,
+        catmint: 15,
     }
 
     cursorItemBboxArray_norm = []

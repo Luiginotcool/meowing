@@ -19,7 +19,8 @@ filenamesArray = [
 plantnamesArray = [
     "shroom",
     "tomato",
-    "citridora"
+    "citridora",
+    "catmint"
 ]
 
 
