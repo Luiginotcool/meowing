@@ -44,6 +44,10 @@ class BoundingBox {
         }
         else {return false;}
     }
+
+    static fromJson(json) {
+        return Object.assign(new BoundingBox(), json);
+    }
 }
 
 let ctx;

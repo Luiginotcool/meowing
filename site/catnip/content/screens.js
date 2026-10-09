@@ -1,5 +1,5 @@
 let screens = {
-    "garden": "meowing cat cafe.png",
+    "garden": "laptop draft5.png",
     "nightgarden": "meowing cat cafe night.png",
     "askfloppa": "askbigfloppa.png",
     "moonshot": "moonshot.png"

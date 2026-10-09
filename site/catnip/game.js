@@ -37,7 +37,7 @@ potArray = [];
 
 function gamesetup() {
 
-    
+
     prepareData();
 
     //
@@ -77,26 +77,30 @@ function gamesetup() {
     //      Set up cursor items
     //
 
-    cursorItemBboxArray_norm = []
-    cursorItemBboxArray.forEach((bbox) => {
-        cursorItemBboxArray_norm.push(new BoundingBox(
+    toolItemBboxArray_norm = []
+    toolItemBboxArray.forEach((bbox) => {
+        toolItemBboxArray_norm.push(new BoundingBox(
             normaliseCoordScreen(bbox.c1),
             normaliseCoordScreen(bbox.c2)
         ));
     })
 
     // constructor(name, filename, bbox, animated, grabPos, id)
-    CursorItem.cursorItem_array = [
-        new CursorItem(
-            "milk can", "milk can", cursorItemBboxArray_norm[0], true, new Coord(140, 45), 0
+    ToolItem.toolItem_array = [
+        new ToolItem(
+            "milk can", "milk can", toolItemBboxArray_norm[0], true, new Coord(140, 45), 0
         ),
-        new CursorItem(
-            "seed bag", "seed bag", cursorItemBboxArray_norm[1], true, new Coord(42, 30), 1
+        new ToolItem(
+            "seed bag", "seed bag", toolItemBboxArray_norm[1], true, new Coord(42, 30), 1
         ),
-        new CursorItem(
-            "shears", "shears", cursorItemBboxArray_norm[2], false, new Coord(80, 65), 2
+        new ToolItem(
+            "shears", "shears", toolItemBboxArray_norm[2], false, new Coord(80, 65), 2
         )
     ]
+
+    Seed.seeds.forEach((seed, i) => {
+        PlantItem.plantItem_array.push(new PlantItem(seed, counterImageBboxArray[i]));
+    })
 
 
 
@@ -122,22 +126,44 @@ function gamesetup() {
 
 
     // 
-    // Create player
+    // Load player data
     //
 
+    player = saveData.player || new Player();
+    if (saveData.potArray) {
+        potArrayData = saveData.potArray;
+        potArray = potArrayDataToArray(potArrayData);
+    }
+
     
-    player = new Player();
+
+    //saveGame(player, potArray);
+
+
+    
+    //debugCheat();
 
 
     window.requestAnimationFrame(gameloop);
 }
 
 
+function loadSaveData() {
+
+}
+
+
+function debugCheat() {
+    Seed.seeds.forEach((seed, i) => {
+        player.plants[i] = 25;
+    })
+}
+
 
 function gameloop(timestamp) {
-
-
     draw();
+    writeInfo(player);
+    saveGame(player, potArray);
 }
 
 
@@ -150,7 +176,8 @@ function handleClick(event) {
     //console.log(x, y);
 
     let normalCoord = normaliseCoord(new Coord(x, y));
-    let coord = new Coord(x, y);
+    let eventCoord = new Coord(x, y);
+    let screenCoord = toScreenCoord(normalCoord);
     //console.log(normalCoord);
     
     if (MAKE_BBOX) {
@@ -162,7 +189,8 @@ function handleClick(event) {
     }
 
     handlePots(normalCoord);
-    handleCursorItem(normalCoord);
+    handleToolItem(normalCoord);
+    handlePlantItem(screenCoord);
     handleScreens(normalCoord);
 
     drawUI();
@@ -172,11 +200,9 @@ function handleClick(event) {
 }
 
 function handlePlantItem(coord) {
-    Seed.seeds.forEach((seed, i) => {
-        let bbox = counterImageBboxArray[i]
-        let coord = toScreenCoord(coord)
-        if (bbox.containsPoint(coord)) {
-
+    PlantItem.plantItem_array.forEach((plantItem) => {
+        if (plantItem.bbox.containsPoint(coord)) {
+            plantItem.clicked();
         }
     })
 }
@@ -201,10 +227,10 @@ function handlePots(coord) {
     })
 }
 
-function handleCursorItem(coord) {
-    CursorItem.cursorItem_array.forEach((cursorItem) => {
-        if (cursorItem.bbox.containsPoint(coord)) {
-            cursorItem.clicked();
+function handleToolItem(coord) {
+    ToolItem.toolItem_array.forEach((toolItem) => {
+        if (toolItem.bbox.containsPoint(coord)) {
+            toolItem.clicked();
         }
     })
 }

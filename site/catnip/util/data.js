@@ -201,11 +201,11 @@ let screen_transition_bbox_dictionary_data = {
 
 
 
-let cursorItemPadding = 3;
-let cursorItemGridPadding = 10;
-let cursorItemWidth = 100;
-let cursorItemHeight = 100;
-let numCursorItems = 3;
+let toolItemPadding = 3;
+let toolItemGridPadding = 10;
+let toolItemWidth = 100;
+let toolItemHeight = 100;
+let numToolItems = 3;
 
 let counterImageCorner = {"x": 10, "y": 120}
 let counterImagePadding = 3;
@@ -215,14 +215,14 @@ let numCounterImages = 4;
 
 
 
-let cursorItemBboxArray = []
+let toolItemBboxArray = []
 let counterImageBboxArray = []
 let screenTransitionBboxDictionary = {}
 
 
 
 function prepareData() {
-  prepareCursorItemData();
+  prepareToolItemData();
   prepareScreenTransitionBboxDictionaryData();
   prepareCounterImageData();
 }
@@ -258,16 +258,28 @@ function prepareScreenTransitionBboxDictionaryData() {
 
 
 
-function prepareCursorItemData() {
-  for (let i = 0; i < numCursorItems; i++) {
-      let x1 = cursorItemGridPadding + (cursorItemWidth + cursorItemPadding)*i;
-      let x2 = x1 + cursorItemWidth;
-      let y1 = cursorItemGridPadding ;
-      let y2 = y1 + cursorItemHeight;
+function prepareToolItemData() {
+  for (let i = 0; i < numToolItems; i++) {
+      let x1 = toolItemGridPadding + (toolItemWidth + toolItemPadding)*i;
+      let x2 = x1 + toolItemWidth;
+      let y1 = toolItemGridPadding ;
+      let y2 = y1 + toolItemHeight;
       let c1 = new Coord(x1, y1);
       let c2 = new Coord(x2, y2);
-      cursorItemBboxArray.push(new BoundingBox(c1, c2));
+      toolItemBboxArray.push(new BoundingBox(c1, c2));
   }
+}
+
+
+function potArrayDataToArray(potArrayData) {
+  let potArray = []
+  potArrayData.forEach((potData) => {
+    let pot = Pot.fromJson(potData);
+    pot.seed_type = Seed.fromJson(pot.seed_type)
+    pot.bbox = BoundingBox.fromJson(pot.bbox);
+    potArray.push(pot);
+  })
+  return potArray;
 }
 
 

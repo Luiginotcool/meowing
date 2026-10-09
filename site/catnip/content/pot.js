@@ -72,20 +72,25 @@ class Pot {
 
     clicked() {
         //console.log("Pot ", this.id, " was clicked!")
-        console.log(player.cursorItem.name)
+        //console.log(player.heldItem.name)
         if (this.grow_stage == 0) {
-            if (player.cursorItem.name == "seed bag") {
+            if (player.heldItem.name == "seed bag") {
                 this.addSeed(Pot.randomSeedType());
+                return;
+            }
+            if (player.heldItem.type == "plant") {
+                this.addSeed(player.heldItem.seed);
+                player.heldItem.use();
             }
             //console.log("Added new seed to ", this.id, ": ", this.seed_type, ". ", this.grow_stage)
             return;
         } 
-        if (player.cursorItem.name == "shears") {
+        if (player.heldItem.name == "shears") {
             if (this.grow_stage > 3) {
                 this.harvest();
             }
         }
-        if (player.cursorItem.name == "milk can") {
+        if (player.heldItem.name == "milk can") {
             console.log("Milk can part ", this.grow_stage)
             if (this.seed_type.name == "mushroom") {
                 if (this.grow_stage == 3) {
@@ -140,6 +145,10 @@ class Pot {
             fillNormCircle(this.plant_base_coord, 5);
         }
     }
+
+    static fromJson(json) {
+        return Object.assign(new Pot(), json);
+    }
 }
 
 class Seed {
@@ -177,5 +186,9 @@ class Seed {
         Seed.seeds.forEach((seed) => { 
             if (seed.name == seedName) { return seed; }
         })
+    }
+
+    static fromJson(json) {
+        return Object.assign(new Seed(), json);
     }
 }

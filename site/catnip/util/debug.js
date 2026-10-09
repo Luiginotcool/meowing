@@ -9,6 +9,6 @@ function writeInfo(player) {
     Seed.seeds.forEach((seed_type, i) => {
         infoString+=`${seed_type.name}: ${player.plants[i]}\n`
     })
-    infoString += `<br/> Debug: ${player.cursorItem.name == "shears"}   Item: ${player.cursorItem.name}`
+    infoString += `<br/> Item type: ${player.heldItem.type}     \t Item: ${player.heldItem.name}`
     infoText.innerHTML = infoString
 }

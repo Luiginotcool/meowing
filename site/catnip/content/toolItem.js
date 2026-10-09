@@ -1,4 +1,4 @@
-class CursorItem {
+class ToolItem {
     name;
     id;
     filename;
@@ -6,9 +6,11 @@ class CursorItem {
     animated;
     bbox;
     grabPos;
-    static cursorItem_array;
-    static none = new CursorItem("none", "", BoundingBox.zero, false, new Coord(0,0), -1);
+    type;
+    static toolItem_array;
+    static none = new ToolItem("none", "", BoundingBox.zero, false, new Coord(0,0), -1);
     constructor(name, filename, bbox, animated, grabPos, id) {
+        this.type = "tool";
         this.name = name;
         this.filename = filename;
         this.bbox = bbox;
@@ -40,21 +42,31 @@ class CursorItem {
         return document.getElementById(fn);
     }
 
+    grab() {
+        player.heldItem = this;
+        player.cursorState = cursorStates.holdingItem;
+    }
+
+    putBack() {
+        player.heldItem = Item.none;
+        player.cursorState = cursorStates.empty;
+    }
+
     clicked() {
         console.log("Click!")
         switch (player.cursorState) {
             case cursorStates.empty:
-                player.cursorItem = this;
-                player.cursorState = cursorStates.holdingItem;
+                this.grab();
                 break;
             case cursorStates.holdingItem:
-                if (player.cursorItem == this) {
-                    player.cursorItem = CursorItem.none;
-                    player.cursorState = cursorStates.empty;
+                if (player.heldItem == this) {
+                    this.putBack();
                 } 
                 else {
-                    player.cursorItem = this;
-                    player.cursorState = cursorStates.holdingItem;
+                    if (player.heldItem.type == "plant") {
+                        player.heldItem.putBack();
+                    }
+                    this.grab();
                 }
                 break;
         }

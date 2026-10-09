@@ -27,11 +27,12 @@ function drawUI() {
     // Draw Cursor Items
 
 
-    let cursorItemBackgroundWidth = (cursorItemWidth + cursorItemPadding)*(numCursorItems) - cursorItemPadding;
+
+    let toolItemBackgroundWidth = (toolItemWidth + toolItemPadding)*(numToolItems) - toolItemPadding;
 
     //      Draw Items Grid
     ctx.fillStyle = "rgba(0.5, 0.5, 0.5, 0.5)";
-    ctx.fillRect(cursorItemGridPadding, cursorItemGridPadding, cursorItemBackgroundWidth, 100);
+    ctx.fillRect(toolItemGridPadding, toolItemGridPadding, toolItemBackgroundWidth, 100);
 
     //      Draw Image Counters Grid
     ctx.fillStyle = "rgba(0.5, 0.5, 0.5, 0.25)";
@@ -48,27 +49,15 @@ function drawUI() {
 
 
 
-    //      Draw Cursor Items
-    CursorItem.cursorItem_array.forEach((cursorItem) => {
-        let corner = toScreenCoord(cursorItem.bbox.c1);    
-        if(!(player.cursorItem == cursorItem)) {
-            cursorItem.drawThumb(corner.x, corner.y, cursorItemWidth, cursorItemHeight);
+    //      Draw Tool Items
+    ToolItem.toolItem_array.forEach((toolItem) => {
+        let corner = toScreenCoord(toolItem.bbox.c1);    
+        if(!(player.heldItem == toolItem)) {
+            toolItem.drawThumb(corner.x, corner.y, toolItemWidth, toolItemHeight);
         }
-        cursorItem.bbox.toScreen().draw();
+        toolItem.bbox.toScreen().draw();
     })
 
-    CursorItem.cursorItem_array.forEach((cursorItem) => {
-        if (player.cursorItem == cursorItem) {
-            switch (player.cursorState) {
-                case cursorStates.holdingItem:
-                    let screenMouseCoord = toScreenCoord(normMouseCoord);
-                    cursorItem.draw(screenMouseCoord.x-cursorItem.grabPos.x, screenMouseCoord.y-cursorItem.grabPos.y)
-                    break;
-                case cursorStates.usingItem:
-                    break;
-            }
-        }
-    })
 
 
     //      Draw Counter Images
@@ -89,8 +78,31 @@ function drawUI() {
         ctx.font = "30px pixel";
         ctx.fillStyle = "#000000"
         ctx.fillText(`${player.plants[i]}`, textX, textY)
-        console.log(`${player.plants[i]}`)
+        //console.log(`${player.plants[i]}`)
     })
+
+    //      Draw Held item
+    ToolItem.toolItem_array.forEach((toolItem) => {
+        if (player.heldItem == toolItem) {
+            switch (player.cursorState) {
+                case cursorStates.holdingItem:
+                    let screenMouseCoord = toScreenCoord(normMouseCoord);
+                    toolItem.draw(screenMouseCoord.x-toolItem.grabPos.x, screenMouseCoord.y-toolItem.grabPos.y)
+                    break;
+                case cursorStates.usingItem:
+                    break;
+            }
+        }
+    })
+
+    PlantItem.plantItem_array.forEach((plantItem) => {
+        if (player.heldItem == plantItem) {
+            let screenMouseCoord = toScreenCoord(normMouseCoord);
+            plantItem.draw(screenMouseCoord.x - counterImageWidth/2, screenMouseCoord.y - counterImageHeight/2);
+        }
+    })
+
+
 
  
 }
