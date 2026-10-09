@@ -31,12 +31,6 @@ let boundingBoxStates = {
     clickedTwice: 2
 }
 
-let cursorStates = {
-    empty: 0,
-    holdingItem: 1,
-    usingItem: 2
-}
-
 potArray = [];
 
 
@@ -140,94 +134,6 @@ function gamesetup() {
 
 
 
-
-function draw() {
-    // Draw background
-    // Draw Pots
-    // Draw Cursor Items
-    // Draw UI
-    drawBackground();
-
-    switch (currentScreenName) {
-        case "garden":
-        case "nightgarden":
-            potArray.forEach((pot) => {
-                pot.draw();
-            });
-            drawUI();
-            break;
-    }
-
-
-    
-}
-
-
-function drawUI() {
-    // Get Images
-    // Draw Cursor Items
-
-
-    let cursorItemBackgroundWidth = (cursorItemWidth + cursorItemPadding)*(numCursorItems);
-
-    //      Draw Items Grid
-    ctx.fillStyle = "#aaaaaa";
-    ctx.fillRect(cursorItemGridPadding, cursorItemGridPadding, cursorItemBackgroundWidth, 100);
-
-    //      Draw Image Counters Grid
-    ctx.fillStyle = "#aaaaaa";
-    ctx.fillRect(
-        counterImageCorner.x, 
-        counterImageCorner.y, 
-        2*counterImageGridPadding + counterImageWidth, 
-        2*counterImageGridPadding + counterImageHeight*numCounterImages
-    );
-
-
-
-    //      Draw Cursor Items
-    CursorItem.cursorItem_array.forEach((cursorItem) => {
-        let corner = toScreenCoord(cursorItem.bbox.c1);    
-        if(!(player.cursorItem == cursorItem)) {
-            cursorItem.drawThumb(corner.x, corner.y, cursorItemWidth, cursorItemHeight);
-        }
-        cursorItem.bbox.toScreen().draw();
-    })
-
-    CursorItem.cursorItem_array.forEach((cursorItem) => {
-        if (player.cursorItem == cursorItem) {
-            switch (player.cursorState) {
-                case cursorStates.holdingItem:
-                    let screenMouseCoord = toScreenCoord(normMouseCoord);
-                    cursorItem.draw(screenMouseCoord.x-cursorItem.grabPos.x, screenMouseCoord.y-cursorItem.grabPos.y)
-                    break;
-                case cursorStates.usingItem:
-                    break;
-            }
-        }
-    })
-
-
-    //      Draw Counter Images
-    Seed.seeds.forEach((seed, i) => {
-        let bbox = counterImageBboxArray[i];
-        let {x, y} = bbox.c1;
-        let sprite = seed.getSprite("item");
-        ctx.drawImage(sprite, x, y, counterImageWidth, counterImageHeight);
-    })
-
-
- 
-}
-
-
-
-function drawBackground() {
-    let bgImg = new Image();
-    bgImg.src = `../assets/${currentScreen}`;
-    ctx.drawImage(bgImg, 0, 0, ctx.canvas.width, ctx.canvas.height);
-}
-
 function gameloop(timestamp) {
 
 
@@ -263,6 +169,16 @@ function handleClick(event) {
     writeInfo(player);
 
     
+}
+
+function handlePlantItem(coord) {
+    Seed.seeds.forEach((seed, i) => {
+        let bbox = counterImageBboxArray[i]
+        let coord = toScreenCoord(coord)
+        if (bbox.containsPoint(coord)) {
+
+        }
+    })
 }
 
 function handleMouseMove(event) {

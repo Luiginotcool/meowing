@@ -207,8 +207,8 @@ let cursorItemWidth = 100;
 let cursorItemHeight = 100;
 let numCursorItems = 3;
 
-let counterImageCorner = {"x": 10, "y": 200}
-let counterImageGridPadding = 3;
+let counterImageCorner = {"x": 10, "y": 120}
+let counterImagePadding = 3;
 let counterImageWidth = 60;
 let counterImageHeight = 60;
 let numCounterImages = 4;
@@ -230,8 +230,8 @@ function prepareData() {
 
 function prepareCounterImageData() {
   for (let i = 0; i < numCounterImages; i++) {
-    let x1 = counterImageCorner.x + counterImageGridPadding;
-    let y1 = counterImageCorner.y + counterImageGridPadding + (counterImageHeight + counterImageGridPadding)*i;
+    let x1 = counterImageCorner.x + counterImagePadding;
+    let y1 = counterImageCorner.y + counterImagePadding + (counterImageHeight + counterImagePadding)*i;
     let x2 = x1 + counterImageWidth;
     let y2 = y1 + counterImageHeight;
     let c1 = new Coord(x1, y1);
@@ -260,9 +260,9 @@ function prepareScreenTransitionBboxDictionaryData() {
 
 function prepareCursorItemData() {
   for (let i = 0; i < numCursorItems; i++) {
-      let x1 = cursorItemPadding + cursorItemGridPadding + (cursorItemWidth + cursorItemPadding)*i;
+      let x1 = cursorItemGridPadding + (cursorItemWidth + cursorItemPadding)*i;
       let x2 = x1 + cursorItemWidth;
-      let y1 = cursorItemGridPadding + cursorItemPadding - 5 ;
+      let y1 = cursorItemGridPadding ;
       let y2 = y1 + cursorItemHeight;
       let c1 = new Coord(x1, y1);
       let c2 = new Coord(x2, y2);

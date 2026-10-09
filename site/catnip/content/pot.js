@@ -162,7 +162,7 @@ class Seed {
             return new Image();
         }
         let img = new Image();
-        if (grow_stage = "item") {
+        if (grow_stage == "item") {
             img = document.getElementById(`plants/${this.filename} item.png`);
             return img;
         }

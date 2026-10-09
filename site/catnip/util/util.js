@@ -27,6 +27,8 @@ class BoundingBox {
     }
 
     draw() {
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "black"
         ctx.strokeRect(this.c1.x, this.c1.y, this.c2.x - this.c1.x, this.c2.y - this.c1.y);
     }
 

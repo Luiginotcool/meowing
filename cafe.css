@@ -1,4 +1,7 @@
-
+@font-face {
+  font-family: pixel; /* set name */
+  src: url(Minecraft.ttf); /* url of the font */
+}
 
 #game-container {
     /*background-image: url("./assets/catnip.webp");*/
