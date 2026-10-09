@@ -32,6 +32,7 @@ plantnamesArray.forEach((plantName) => {
     for (let i = 1; i <= numImages; i++) {
         filenamesArray.push(`plants/${plantName} growth stage ${i}.png`)
     }
+    filenamesArray.push(`plants/${plantName} item.png`)
 });
 
 

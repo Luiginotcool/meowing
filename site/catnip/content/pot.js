@@ -162,6 +162,10 @@ class Seed {
             return new Image();
         }
         let img = new Image();
+        if (grow_stage = "item") {
+            img = document.getElementById(`plants/${this.filename} item.png`);
+            return img;
+        }
         img = document.getElementById(`plants/${this.filename} growth stage ${grow_stage-1}.png`)
 
         console.log("Drawing sprite ", `../assets/plants/${this.filename} growth stage ${grow_stage-1}.png`)

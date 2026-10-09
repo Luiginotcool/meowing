@@ -182,7 +182,19 @@ let screen_transition_bbox_dictionary_data = {
           "y": 0.18503337098323425
         }
       }
-    ]
+    ],
+    "askfloppa": [
+      {
+        "c1": {
+          "x": 0.7709590190986587,
+          "y": 0.30214309945363566
+        },
+        "c2": {
+          "x": 0.8678968918340499,
+          "y": 0.4403325790487093
+        }
+      }
+    ],
   }
 }
 
@@ -195,8 +207,16 @@ let cursorItemWidth = 100;
 let cursorItemHeight = 100;
 let numCursorItems = 3;
 
+let counterImageCorner = {"x": 10, "y": 200}
+let counterImageGridPadding = 3;
+let counterImageWidth = 60;
+let counterImageHeight = 60;
+let numCounterImages = 4;
+
+
 
 let cursorItemBboxArray = []
+let counterImageBboxArray = []
 let screenTransitionBboxDictionary = {}
 
 
@@ -204,8 +224,21 @@ let screenTransitionBboxDictionary = {}
 function prepareData() {
   prepareCursorItemData();
   prepareScreenTransitionBboxDictionaryData();
+  prepareCounterImageData();
 }
 
+
+function prepareCounterImageData() {
+  for (let i = 0; i < numCounterImages; i++) {
+    let x1 = counterImageCorner.x + counterImageGridPadding;
+    let y1 = counterImageCorner.y + counterImageGridPadding + (counterImageHeight + counterImageGridPadding)*i;
+    let x2 = x1 + counterImageWidth;
+    let y2 = y1 + counterImageHeight;
+    let c1 = new Coord(x1, y1);
+    let c2 = new Coord(x2, y2);
+    counterImageBboxArray.push(new BoundingBox(c1, c2));
+  }
+}
 
 
 function prepareScreenTransitionBboxDictionaryData() {

@@ -170,11 +170,22 @@ function drawUI() {
 
     let cursorItemBackgroundWidth = (cursorItemWidth + cursorItemPadding)*(numCursorItems);
 
-    // Draw Items Grid
+    //      Draw Items Grid
     ctx.fillStyle = "#aaaaaa";
-    ctx.fillRect(cursorItemGridPadding, cursorItemGridPadding, cursorItemBackgroundWidth, 100)
+    ctx.fillRect(cursorItemGridPadding, cursorItemGridPadding, cursorItemBackgroundWidth, 100);
+
+    //      Draw Image Counters Grid
+    ctx.fillStyle = "#aaaaaa";
+    ctx.fillRect(
+        counterImageCorner.x, 
+        counterImageCorner.y, 
+        2*counterImageGridPadding + counterImageWidth, 
+        2*counterImageGridPadding + counterImageHeight*numCounterImages
+    );
 
 
+
+    //      Draw Cursor Items
     CursorItem.cursorItem_array.forEach((cursorItem) => {
         let corner = toScreenCoord(cursorItem.bbox.c1);    
         if(!(player.cursorItem == cursorItem)) {
@@ -185,7 +196,6 @@ function drawUI() {
 
     CursorItem.cursorItem_array.forEach((cursorItem) => {
         if (player.cursorItem == cursorItem) {
-
             switch (player.cursorState) {
                 case cursorStates.holdingItem:
                     let screenMouseCoord = toScreenCoord(normMouseCoord);
@@ -193,11 +203,20 @@ function drawUI() {
                     break;
                 case cursorStates.usingItem:
                     break;
-                    
             }
-
         }
     })
+
+
+    //      Draw Counter Images
+    Seed.seeds.forEach((seed, i) => {
+        let bbox = counterImageBboxArray[i];
+        let {x, y} = bbox.c1;
+        let sprite = seed.getSprite("item");
+        ctx.drawImage(sprite, x, y, counterImageWidth, counterImageHeight);
+    })
+
+
  
 }
 
