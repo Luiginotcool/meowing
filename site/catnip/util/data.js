@@ -499,7 +499,7 @@ let gameClickBoxIds = [
 ]
 
 let gameScreenFilenames = [
-    "laptop draft4.png",
+    "laptop draft5.png",
     "meowing cat cafe night.png",
     "moonshot.png"
 ]
