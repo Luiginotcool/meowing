@@ -104,7 +104,6 @@ function drawUI() {
         ctx.font = "30px pixel";
         ctx.fillStyle = "#000000"
         ctx.fillText(`${player.plants[i]}`, textX, textY)
-        //console.log(`${player.plants[i]}`)
     })
 
     //      Draw Held item

@@ -170,6 +170,7 @@ let saveTick = 0;
 function gameloop(timestamp) {
     draw();
     //writeInfo(player);
+    saveTick++;
     if (saveTick > 600) {
         saveGame(player, potArray);
         saveTick = 0;
@@ -204,7 +205,7 @@ function handleClick(event) {
     handleScreens(normalCoord);
 
     drawUI();
-    writeInfo(player);
+    //writeInfo(player);
 
     
 }
