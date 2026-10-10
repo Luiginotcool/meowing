@@ -17,12 +17,6 @@ function draw() {
             break;
     }
 
-    webpageScreenNames.forEach((screenName) => {
-        if (currentScreenName == screenName) {
-            drawInternet();
-        }
-    })
-
 
 
     if (DRAW_SCENE_BOXES) {

@@ -53,7 +53,6 @@ class ToolItem {
     }
 
     clicked() {
-        console.log("Click!")
         switch (player.cursorState) {
             case cursorStates.empty:
                 this.grab();

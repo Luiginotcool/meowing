@@ -381,7 +381,6 @@ function prepareCounterImageData() {
 
 
 function prepareScreenTransitionBboxDictionaryData() {
-  console.log()
   Object.keys(screen_transition_bbox_dictionary_data).forEach((from) => {
     screenTransitionBboxDictionary[from] = {}
     Object.keys(screen_transition_bbox_dictionary_data[from]).forEach((to) => {
@@ -411,7 +410,6 @@ function createInternetScreenTransitions() {
         }
       })
     });
-    console.log(webpageName, screenTransitionBboxDictionary[webpageName])
   })
 }
 

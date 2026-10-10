@@ -165,11 +165,15 @@ function debugCheat() {
     })
 }
 
+let saveTick = 0;
 
 function gameloop(timestamp) {
     draw();
-    writeInfo(player);
-    saveGame(player, potArray);
+    //writeInfo(player);
+    if (saveTick > 600) {
+        saveGame(player, potArray);
+        saveTick = 0;
+    }
 }
 
 

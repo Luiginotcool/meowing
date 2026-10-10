@@ -75,7 +75,6 @@ function toScreenCoord(coord) {
     
     let x = coord.x * canvas.width;
     let y = coord.y * canvas.height;
-    //console.log(width, height, coord)
     return new Coord(x, y);
 }
 
@@ -98,7 +97,6 @@ function handleBoundingBox(coord, state) {
             secondPos = coord;
             let bb = new BoundingBox(firstPos, secondPos);
             boxes.push(bb);
-            //console.log(boxes);
             newState = boundingBoxStates.noClick;
         default:
             break;

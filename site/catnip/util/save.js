@@ -6,9 +6,7 @@ let saveData = {
     "potArray": JSON.parse(localStorage.getItem("potArray"))
 }
 
-localStorage.clear();
 
-console.log("save data", saveData)
 
 
 function saveGame(player, potArray) {

@@ -55,7 +55,6 @@ class Pot {
         let [min, max] = Seed.seed_loot_table[this.getSeedName()];
         let range = max - min;
         let r = min + Math.floor(Math.random() * (range));
-        console.log(r)
         return r;
     }
 
@@ -114,7 +113,6 @@ class Pot {
     }
 
     addSeed(seed_type) {
-        //console.log("Add seed ", seed_type)
         this.seed_type = seed_type;
         this.grow_stage = 1;
         this.has_seed = true;
@@ -122,14 +120,12 @@ class Pot {
     }
 
     setSeed(seed_type) {
-        //console.log("Set seed ", seed_type)
         this.seed_type = seed_type;
         this.grow_stage = 1;
         this.has_seed = true;
     }
 
     draw() {
-        //console.log(this.grow_stage, this.plant_base_coord)
         let baseScreen = toScreenCoord(this.plant_base_coord);
         let scale = 1;
         if (this.grow_stage > 1) {

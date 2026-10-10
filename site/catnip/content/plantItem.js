@@ -44,7 +44,6 @@ class PlantItem {
     }
 
     clicked() {
-        console.log("Plant item clicked!")
         switch (player.cursorState) {
             case cursorStates.empty:
                 if (player.plants[this.seed.id] > 0) {
