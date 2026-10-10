@@ -128,7 +128,168 @@ let plant_base_array = [
     "x": 0.7090976027182652,
     "y": 0.3792118789263278
   }
+];
+
+let laptopBoxes = [
+  {
+    "c1": {
+      "x": 0.8711507293354943,
+      "y": 0.49624060150375937
+    },
+    "c2": {
+      "x": 0.893030794165316,
+      "y": 0.3132832080200501
+    }
+  },
+  {
+    "c1": {
+      "x": 0.8905996758508914,
+      "y": 0.47869674185463656
+    },
+    "c2": {
+      "x": 0.9084278768233387,
+      "y": 0.31704260651629074
+    }
+  },
+  {
+    "c1": {
+      "x": 0.9035656401944895,
+      "y": 0.4548872180451128
+    },
+    "c2": {
+      "x": 0.9238249594813615,
+      "y": 0.3333333333333333
+    }
+  },
+  {
+    "c1": {
+      "x": 0.9205834683954619,
+      "y": 0.39223057644110276
+    },
+    "c2": {
+      "x": 0.9408427876823339,
+      "y": 0.3433583959899749
+    }
+  },
+  {
+    "c1": {
+      "x": 0.8752025931928687,
+      "y": 0.4899749373433584
+    },
+    "c2": {
+      "x": 0.8622366288492707,
+      "y": 0.31954887218045114
+    }
+  },
+  {
+    "c1": {
+      "x": 0.8646677471636953,
+      "y": 0.4824561403508772
+    },
+    "c2": {
+      "x": 0.8419773095623987,
+      "y": 0.38972431077694236
+    }
+  },
+  {
+    "c1": {
+      "x": 0.8460291734197731,
+      "y": 0.4674185463659148
+    },
+    "c2": {
+      "x": 0.8257698541329012,
+      "y": 0.39598997493734334
+    }
+  },
+  {
+    "c1": {
+      "x": 0.8290113452188006,
+      "y": 0.4548872180451128
+    },
+    "c2": {
+      "x": 0.8079416531604539,
+      "y": 0.40977443609022557
+    }
+  },
+  {
+    "c1": {
+      "x": 0.8492706645056726,
+      "y": 0.39849624060150374
+    },
+    "c2": {
+      "x": 0.8752025931928687,
+      "y": 0.3408521303258145
+    }
+  },
+  {
+    "c1": {
+      "x": 0.8719611021069692,
+      "y": 0.3308270676691729
+    },
+    "c2": {
+      "x": 0.8954619124797407,
+      "y": 0.29699248120300753
+    }
+  },
+  {
+    "c1": {
+      "x": 0.9019448946515397,
+      "y": 0.43609022556390975
+    },
+    "c2": {
+      "x": 0.9343598055105349,
+      "y": 0.37468671679197996
+    }
+  }
+];
+
+let backButtonBoxes = [
+{
+    "c1": {
+      "x": 0.01053484602917342,
+      "y": 0.10651629072681704
+    },
+    "c2": {
+      "x": 0.08914100486223663,
+      "y": 0.020050125313283207
+    }
+  }
 ]
+
+let homeButtonBoxes = [{
+    "c1": {
+      "x": 0.646677471636953,
+      "y": 0.11904761904761904
+    },
+    "c2": {
+      "x": 0.7293354943273906,
+      "y": 0.007518796992481203
+    }
+}]
+
+let wikiButtonBoxes = [{
+    "c1": {
+      "x": 0.7423014586709886,
+      "y": 0.11904761904761904
+    },
+    "c2": {
+      "x": 0.8217179902755267,
+      "y": 0.007518796992481203
+    }
+}];
+
+let paintButtonBoxes = [{
+    "c1": {
+      "x": 0.8379254457050244,
+      "y": 0.11654135338345864
+    },
+    "c2": {
+      "x": 0.9181523500810372,
+      "y": 0.007518796992481203
+    }
+}]
+
+
 
 let screen_transition_bbox_dictionary_data = {
   "garden": {
@@ -144,18 +305,7 @@ let screen_transition_bbox_dictionary_data = {
         }
       }
     ],
-    "askfloppa": [
-      {
-        "c1": {
-          "x": 0.7709590190986587,
-          "y": 0.30214309945363566
-        },
-        "c2": {
-          "x": 0.8678968918340499,
-          "y": 0.4403325790487093
-        }
-      }
-    ],
+    "askfloppa": laptopBoxes,
   },
 
   "nightgarden": {
@@ -183,18 +333,7 @@ let screen_transition_bbox_dictionary_data = {
         }
       }
     ],
-    "askfloppa": [
-      {
-        "c1": {
-          "x": 0.7709590190986587,
-          "y": 0.30214309945363566
-        },
-        "c2": {
-          "x": 0.8678968918340499,
-          "y": 0.4403325790487093
-        }
-      }
-    ],
+    "askfloppa": laptopBoxes,
   }
 }
 
@@ -253,9 +392,28 @@ function prepareScreenTransitionBboxDictionaryData() {
       })
     })
   })
+  
+  //createInternetScreenTransitions();
 }
 
-
+function createInternetScreenTransitions() {
+  webpageScreenNames.forEach((webpageName) => {
+    if (!screenTransitionBboxDictionary[webpageName]) {
+      screenTransitionBboxDictionary[webpageName] = {};
+    }
+    screenTransitionBboxDictionary[webpageName]["home"] = homeButtonBoxes;
+    screenTransitionBboxDictionary[webpageName]["wiki"] = wikiButtonBoxes;
+    screenTransitionBboxDictionary[webpageName]["paint"] = paintButtonBoxes;
+    Object.keys(screenTransitionBboxDictionary).forEach((from) => {
+      Object.keys(screenTransitionBboxDictionary[from]).forEach((to) => {
+        if (to == webpageName) {
+          screenTransitionBboxDictionary[webpageName][from] = backButtonBoxes;
+        }
+      })
+    });
+    console.log(webpageName, screenTransitionBboxDictionary[webpageName])
+  })
+}
 
 
 function prepareToolItemData() {

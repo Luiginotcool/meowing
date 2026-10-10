@@ -17,9 +17,41 @@ function draw() {
             break;
     }
 
+    webpageScreenNames.forEach((screenName) => {
+        if (currentScreenName == screenName) {
+            drawInternet();
+        }
+    })
 
-    
+
+
+    if (DRAW_SCENE_BOXES) {
+        drawSceneBoxes();
+    }
+    if (MAKE_BBOX) {
+        if (boundingBoxState == boundingBoxStates.clickedOnce) {
+            let screenMouseCoord = toScreenCoord(normMouseCoord);
+            let firstPosScreen = toScreenCoord(firstPos);
+            ctx.strokeRect(firstPosScreen.x, firstPosScreen.y, screenMouseCoord.x - firstPosScreen.x, screenMouseCoord.y - firstPosScreen.y);
+        }
+        boxes.forEach((box) => {
+            box.toScreen().draw();
+        })
+    }
 }
+
+
+function drawInternet() {
+
+
+    // Draw Page
+    // Draw Header
+    
+    drawPageHeader();
+}
+
+
+
 
 
 function drawUI() {
@@ -100,17 +132,28 @@ function drawUI() {
             let screenMouseCoord = toScreenCoord(normMouseCoord);
             plantItem.draw(screenMouseCoord.x - counterImageWidth/2, screenMouseCoord.y - counterImageHeight/2);
         }
-    })
+    }) 
+}
+
+
+function drawSceneBoxes() {
+    destinationDict = screenTransitionBboxDictionary[currentScreenName]
+    if (!destinationDict) {return;}
+    Object.keys(destinationDict).forEach((to) => {
+        destinationDict[to].forEach((bbox) => {
+            bbox.toScreen().draw();
+        })
+    }) 
 
 
 
- 
 }
 
 
 
 function drawBackground() {
-    let bgImg = new Image();
-    bgImg.src = `../assets/${currentScreen}`;
+    //let bgImg = new Image();
+    //bgImg.src = `../assets/${currentScreen}`;
+    let bgImg = document.getElementById(currentScreen);
     ctx.drawImage(bgImg, 0, 0, ctx.canvas.width, ctx.canvas.height);
 }

@@ -1,6 +1,6 @@
-const MAKE_BBOX = true;
+const MAKE_BBOX = false;
 const MAKE_POS_ARRAY = false;
-
+const DRAW_SCENE_BOXES = false;
 
 
 
@@ -73,6 +73,14 @@ function gamesetup() {
     }
 
 
+    Seed.seed_loot_table = {
+        tomato: [3,5],
+        mushroom: [1,2],
+        citridora: [1,2],
+        catmint: [1,3]
+    }
+
+
     //
     //      Set up cursor items
     //
@@ -135,6 +143,7 @@ function gamesetup() {
         potArray = potArrayDataToArray(potArrayData);
     }
 
+
     
 
     //saveGame(player, potArray);
@@ -148,9 +157,6 @@ function gamesetup() {
 }
 
 
-function loadSaveData() {
-
-}
 
 
 function debugCheat() {

@@ -13,8 +13,13 @@ filenamesArray = [
     "seed bag 1.png",
     "seed bag 2.png",
     "shears.png",
-    "shears thumb.png"
+    "shears thumb.png",
+    "webpage header.png"
 ]
+
+
+
+
 
 plantnamesArray = [
     "shroom",
@@ -34,6 +39,10 @@ plantnamesArray.forEach((plantName) => {
     }
     filenamesArray.push(`plants/${plantName} item.png`)
 });
+
+Object.keys(screens).forEach((screen) => {
+    filenamesArray.push(screens[screen]);
+})
 
 
 let containerHTML = ""

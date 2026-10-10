@@ -1,5 +1,6 @@
 
 
+
 let saveData = {
     "player": JSON.parse(localStorage.getItem("player")),
     "potArray": JSON.parse(localStorage.getItem("potArray"))
@@ -19,3 +20,10 @@ function saveGame(player, potArray) {
     //localStorage.saveData = JSON.stringify(saveData);
 }
 
+function wipeSave() {
+    localStorage.clear();
+    saveData = {
+        "player": null,
+        "potArray": null
+    }
+}
