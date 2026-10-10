@@ -11,3 +11,5 @@ function drawPageHeader() {
     let img = document.getElementById("webpage header.png");
     ctx.drawImage(img, 0, 0);
 }
+
+

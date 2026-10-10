@@ -1,0 +1,25 @@
+clickboxIds = ["back",
+"home_",
+"wiki_",
+"paint_",
+"exit_",
+"askfloppa_bet36meow",
+"askfloppa_milkroad",
+"askfloppa_meowtube",
+"bet36_golf,",
+"bet36_flapjack,",
+"bet36_bingo",
+"milkroad_buy",
+"milkbuy_2",
+"milkbuy_3",
+"milkroad_sell",
+"meowtube_videos1",
+"meowvids_2",
+"meowclip_1",
+"meowclip_2",
+"meowclip_3",
+"meowclip_4",
+"meowclip_5"]
+
+for clickboxId in clickboxIds:
+    print(f"\"{clickboxId}\": [300, 300, 600, 600],")

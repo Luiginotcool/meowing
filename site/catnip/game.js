@@ -1,6 +1,6 @@
 const MAKE_BBOX = false;
 const MAKE_POS_ARRAY = false;
-const DRAW_SCENE_BOXES = false;
+const DRAW_SCENE_BOXES = true;
 
 
 
@@ -47,8 +47,8 @@ function gamesetup() {
     canvas = document.getElementById("game-canvas");
     ctx = canvas.getContext("2d");
 
-    console.log(ctx);
-    canvas.onclick = handleClick;
+    canvas.onmousedown = handleClick;
+    canvas.oncontextmenu = (e) => {e.preventDefault();}
     canvas.onmousemove = handleMouseMove;
 
     infoText = document.getElementById("ui")
@@ -174,7 +174,7 @@ function gameloop(timestamp) {
     if (saveTick > 60) {
         saveGame(player, potArray);
         saveTick = 0;
-        console.log("Saving...")
+        //console.log("Saving...")
     }
 }
 
@@ -191,19 +191,33 @@ function handleClick(event) {
     let eventCoord = new Coord(x, y);
     let screenCoord = toScreenCoord(normalCoord);
     //console.log(normalCoord);
-    
-    if (MAKE_BBOX) {
-        boundingBoxState = handleBoundingBox(normalCoord, boundingBoxState);
-        console.log(boxes);
-    }
-    if (MAKE_POS_ARRAY) {
-        handlePosArray(normalCoord);
-    }
 
-    handlePots(normalCoord);
-    handleToolItem(normalCoord);
-    handlePlantItem(screenCoord);
-    handleScreens(normalCoord);
+
+    if (event.which == 3) { // right click
+        if (MAKE_BBOX) {
+            boundingBoxState = handleBoundingBox(screenCoord, boundingBoxState);
+            if (boundingBoxState == boundingBoxStates.noClick) {
+                let str = ""
+                boxes.forEach((box) => {
+                    str+=`[${box[0]}, ${box[1]}, ${box[2]}, ${box[3]}],\n`
+                });
+                console.log(str);
+            }
+        }
+        if (MAKE_POS_ARRAY) {
+            handlePosArray(normalCoord);
+        }
+    }
+    
+
+
+    if (event.which == 1) { // Left click
+        handlePots(normalCoord);
+        handleToolItem(normalCoord);
+        handlePlantItem(screenCoord);
+        handleScreens(screenCoord);
+    } 
+
 
     drawUI();
     //writeInfo(player);
@@ -212,11 +226,14 @@ function handleClick(event) {
 }
 
 function handlePlantItem(coord) {
-    PlantItem.plantItem_array.forEach((plantItem) => {
-        if (plantItem.bbox.containsPoint(coord)) {
-            plantItem.clicked();
-        }
-    })
+    if (Screen.currentScreen.name == "garden" || Screen.currentScreen.name == "nightgarden") {
+        PlantItem.plantItem_array.forEach((plantItem) => {
+            if (plantItem.bbox.containsPoint(coord)) {
+                plantItem.clicked();
+            }
+        })
+    }
+
 }
 
 function handleMouseMove(event) {
@@ -230,25 +247,31 @@ function handleMouseMove(event) {
 }
 
 function handlePots(coord) {
-    potArray.forEach((pot) => {
-        //console.log(coord, pot.bbox, pot.bbox.containsPoint(coord))
-        if (pot.bbox.containsPoint(coord)) {
-            pot.clicked();
-        } 
-        pot.draw();
-    })
+    if (Screen.currentScreen.name == "garden" || Screen.currentScreen.name == "nightgarden") {
+        potArray.forEach((pot) => {
+            //console.log(coord, pot.bbox, pot.bbox.containsPoint(coord))
+            if (pot.bbox.containsPoint(coord)) {
+                pot.clicked();
+            } 
+            pot.draw();
+        })
+    }
+
 }
 
 function handleToolItem(coord) {
-    ToolItem.toolItem_array.forEach((toolItem) => {
-        if (toolItem.bbox.containsPoint(coord)) {
-            toolItem.clicked();
-        }
-    })
+    if (Screen.currentScreen.name == "garden" || Screen.currentScreen.name == "nightgarden") {
+        ToolItem.toolItem_array.forEach((toolItem) => {
+            if (toolItem.bbox.containsPoint(coord)) {
+                toolItem.clicked();
+            }
+        })
+    }
+
 }
 
 
-function handleScreens(coord) {
+function handleScreensOld(coord) {
     //console.log(screenTransitionBboxDictionary, currentScreenName)
     let destinationDict = screenTransitionBboxDictionary[currentScreenName];
     Object.keys(destinationDict).forEach((to) => {
@@ -260,6 +283,17 @@ function handleScreens(coord) {
     })
 }
 
+function handleScreens(coord) {
+    let navLinks = Screen.currentScreen.navLinks;
+    navLinks.forEach((navLink, i) => {
+        let destId = navLink.dest;
+        let clickBoxId = navLink.clickBox;
+        //console.log(`Destination: ${ScreenGraph.screenName(destId)},  Click box: ${ScreenGraph.clickBoxName(clickBoxId)}`)
+        if (Screen.navLinkContains(navLink, coord)) {
+            Screen.navigate(navLink);
+        }
+    })
+}
 
 
 

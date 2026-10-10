@@ -6,8 +6,8 @@ function draw() {
     // Draw Cursor Items
     // Draw UI
     drawBackground();
-
-    switch (currentScreenName) {
+    //console.log(Screen.currentScreen.name)
+    switch (Screen.currentScreen.name) {
         case "garden":
         case "nightgarden":
             potArray.forEach((pot) => {
@@ -17,19 +17,23 @@ function draw() {
             break;
     }
 
+    if (Screen.currentScreen.internetPage) {
+        drawInternet();
+    }
+
 
 
     if (DRAW_SCENE_BOXES) {
-        drawSceneBoxes();
+        drawScreenBoxes();
     }
     if (MAKE_BBOX) {
         if (boundingBoxState == boundingBoxStates.clickedOnce) {
             let screenMouseCoord = toScreenCoord(normMouseCoord);
-            let firstPosScreen = toScreenCoord(firstPos);
+            let firstPosScreen = firstPos;
             ctx.strokeRect(firstPosScreen.x, firstPosScreen.y, screenMouseCoord.x - firstPosScreen.x, screenMouseCoord.y - firstPosScreen.y);
         }
         boxes.forEach((box) => {
-            box.toScreen().draw();
+            ctx.strokeRect(box[0],box[1],box[2]-box[0],box[3]-box[1]);
         })
     }
 }
@@ -129,7 +133,7 @@ function drawUI() {
 }
 
 
-function drawSceneBoxes() {
+function drawScreenBoxesOld() {
     destinationDict = screenTransitionBboxDictionary[currentScreenName]
     if (!destinationDict) {return;}
     Object.keys(destinationDict).forEach((to) => {
@@ -137,16 +141,25 @@ function drawSceneBoxes() {
             bbox.toScreen().draw();
         })
     }) 
-
-
-
 }
 
+function drawScreenBoxes() {
+    let navLinks = Screen.currentScreen.navLinks;
+    //console.log(navLinks)
+    navLinks.forEach((navLink, i) => {
+        let destId = navLink.dest;
+        let clickBoxId = navLink.clickBox;
+        let clickBox = clickBoxLookup[ScreenGraph.clickBoxName(clickBoxId)];
+        //console.log(navLink, clickBoxId)
+        ctx.strokeRect(clickBox[0], clickBox[1], clickBox[2]-clickBox[0], clickBox[3]-clickBox[1])
+    })
+}
 
 
 function drawBackground() {
     //let bgImg = new Image();
     //bgImg.src = `../assets/${currentScreen}`;
-    let bgImg = document.getElementById(currentScreen);
+    //console.log(Screen.currentScreen.filename)
+    let bgImg = document.getElementById(Screen.currentScreen.filename);
     ctx.drawImage(bgImg, 0, 0, ctx.canvas.width, ctx.canvas.height);
 }

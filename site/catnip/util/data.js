@@ -340,6 +340,251 @@ let screen_transition_bbox_dictionary_data = {
 
 
 
+
+
+let internetScreenIds = [
+    "home",
+    "wiki",
+    "paint",
+    "exit",
+    "askfloppa",
+    "bet36meow",
+    "milkroad",
+    "meowtube",
+    "betgolf",
+    "betflapjack",
+    "betbingo",
+    "milkbuy",
+    "milkbuy2",
+    "milkbuy3",
+    "milksell",
+    "meowvids1",
+    "meowvids2",
+    "meowclip1",
+    "meowclip2",
+    "meowclip3",
+    "meowclip4",
+    "meowclip5",
+    "meowclip6",
+    "meowclip7",
+    "meowclip8",
+    "meowclip9",
+    "meowclip10",
+]
+
+
+
+let internetClickBoxIds = [
+"back_",
+"home_",
+"wiki_",
+"paint_",
+"exit_",
+"home_askfloppa",
+"home_bet36meow",
+"home_milkroad",
+"home_meowtube",
+"bet36_golf",
+"bet36_flapjack",
+"bet36_bingo",
+"milkroad_buy",
+"milkbuy_2",
+"milkbuy_3",
+"milkroad_sell",
+"meowtube_videos1",
+"meowvids_2",
+"meowclip_1",
+"meowclip_2",
+"meowclip_3",
+"meowclip_4",
+"meowclip_5",
+"meowclip_meowtube",
+"milk_milkroad"]
+
+
+let internetScreenFilenames = [
+"home.png",
+"wiki.png",
+"paint.png",
+"exit.png",
+"askfloppa.png",
+"bet36meow.png",
+"milkroad.png",
+"meowtube.png",
+"betgolf.png",
+"betflapjack.png",
+"betbingo.png",
+"milkbuy.png",
+"milkbuy2.png",
+"milkbuy3.png",
+"milksell.png",
+"meowvids1.png",
+"meowvids2.png",
+"meowclip1.png",
+"meowclip2.png",
+"meowclip3.png",
+"meowclip4.png",
+"meowclip5.png",
+"meowclip6.png",
+"meowclip7.png",
+"meowclip8.png",
+"meowclip9.png",
+"meowclip10.png",
+]
+
+
+
+let clickBoxLookup = {
+    "milkroad_buy": [100, 200, 500, 500],
+    "milkbuy_2": [400, 650, 500, 700],
+    "milkbuy_3": [400, 650, 500, 700],
+    "milkroad_sell": [510, 200, 910, 500],
+    "meowtube_videos1": [100, 200, 500, 500],
+    "meowvids_2": [400, 650, 500, 700],
+    "meowclip_1": [100, 150, 250, 300],
+    "meowclip_2": [100, 325, 250, 475],
+    "meowclip_3": [100, 500, 250, 650],
+    "meowclip_4": [600, 150, 750, 300],
+    "meowclip_5": [600, 325, 750, 475],
+    "meowclip_meowtube": [800, 300, 1000, 600],
+    "milk_milkroad": [800, 300, 1000, 600],
+
+
+    "moon_": [1043, 151, 1083, 108],
+    "full_": [0, 0, 1300, 1300],
+    "laptop_1": [996,388,1143,322],
+    "laptop_2": [1058,322,1154,243],
+    "light_": [552,61,658,3],
+
+    "back_": [10, 84, 113, 16],
+    "home_": [796, 97, 897, 4],
+    "wiki_": [912, 96, 1016, 4],
+    "paint_": [1034, 95, 1135, 5],
+    "exit_": [1176, 41, 1233, 0],
+
+    "home_askfloppa": [955, 169, 1134, 752],
+    "home_bet36meow": [84, 535, 269, 711],
+    "home_milkroad": [456, 355, 655, 527],
+    "home_meowtube": [86, 170, 288, 342],
+
+    "bet36_golf": [257, 291, 955, 541],
+    "bet36_flapjack": [254, 565, 499, 798],
+    "bet36_bingo": [528, 565, 772, 796],
+    "bet_bet36meow": [843, 259, 1, 112],
+}
+
+
+
+let gthrth = [
+[257, 291, 955, 541],
+[254, 565, 499, 798],
+[528, 565, 772, 796],
+[843, 259, 1, 112],
+]
+
+
+
+let gameScreenIds = [
+    "garden",
+    "nightgarden",
+    "moonshot",
+]
+
+let gameClickBoxIds = [
+    "light_",
+    "moon_",
+    "laptop_1",
+    "laptop_2",
+    "full_"
+]
+
+let gameScreenFilenames = [
+    "laptop draft4.png",
+    "meowing cat cafe night.png",
+    "moonshot.png"
+]
+
+
+let gameGraphString = `
+garden, nightgarden, light_
+nightgarden, garden, light_
+nightgarden, moonshot, moon_,
+moonshot, nightgarden, full_
+garden, home, laptop_1,
+nightgarden, home, laptop_1,
+garden, home, laptop_2,
+nightgarden, home, laptop_2,
+`
+
+
+
+
+
+let internetGraphString = `
+home, askfloppa, home_askfloppa
+home, bet36meow, home_bet36meow
+home, milkroad, home_milkroad
+home, meowtube, home_meowtube
+bet36meow, betgolf, bet36_golf,
+bet36meow, betflapjack, bet36_flapjack,
+bet36meow, betbingo, bet36_bingo
+milkroad, milkbuy, milkroad_buy
+milkbuy, milkbuy2, milkbuy_2
+milkbuy2, milkbuy3, milkbuy_3
+milkroad, milksell, milkroad_sell
+meowtube, meowvids1, meowtube_videos1
+meowvids1, meowvids2, meowvids_2
+meowvids1, meowclip1, meowclip_1
+meowvids1, meowclip2, meowclip_2
+meowvids1, meowclip3, meowclip_3
+meowvids1, meowclip4, meowclip_4
+meowvids1, meowclip5, meowclip_5
+meowvids2, meowclip6, meowclip_1
+meowvids2, meowclip7, meowclip_2
+meowvids2, meowclip8, meowclip_3
+meowvids2, meowclip9, meowclip_4
+meowvids2, meowclip10, meowclip_5
+`;
+
+let internetGraphExtraString = `
+meowclip1, meowtube, meowclip_meowtube
+meowclip2, meowtube, meowclip_meowtube
+meowclip3, meowtube, meowclip_meowtube
+meowclip4, meowtube, meowclip_meowtube
+meowclip5, meowtube, meowclip_meowtube
+meowvids1, meowtube, meowclip_meowtube
+meowvids2, meowtube, meowclip_meowtube
+meowclip6, meowtube, meowclip_meowtube
+meowclip7, meowtube, meowclip_meowtube
+meowclip8, meowtube, meowclip_meowtube
+meowclip9, meowtube, meowclip_meowtube
+meowclip10, meowtube, meowclip_meowtube
+meowvids1, meowtube, meowclip_meowtube
+meowvids2, meowtube, meowclip_meowtube
+milkbuy, milkroad, milk_milkroad
+milkbuy2, milkroad, milk_milkroad
+milkbuy3, milkroad, milk_milkroad
+milksell, milkroad, milk_milkroad
+betgolf, bet36meow, bet_bet36meow
+betflapjack, bet36meow, bet_bet36meow
+betbingo, bet36meow, bet_bet36meow
+`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let toolItemPadding = 3;
 let toolItemGridPadding = 10;
 let toolItemWidth = 100;

@@ -21,6 +21,7 @@ filenamesArray = [
 
 
 
+
 plantnamesArray = [
     "shroom",
     "tomato",
@@ -40,14 +41,22 @@ plantnamesArray.forEach((plantName) => {
     filenamesArray.push(`plants/${plantName} item.png`)
 });
 
-Object.keys(screens).forEach((screen) => {
-    filenamesArray.push(screens[screen]);
-})
+
+
+
 
 
 let containerHTML = ""
 filenamesArray.forEach((fileName) => {
     containerHTML += `<img src="../assets/${fileName}" id="${fileName}"/>`;
+})
+
+internetScreenFilenames.forEach((filename) => {
+    containerHTML += `<img src="../assets/internet/${filename}" id="${filename}"/>`
+})
+
+gameScreenFilenames.forEach((filename) => {
+    containerHTML += `<img src="../assets/${filename}" id="${filename}"/>`
 })
 
 assetsContainer.innerHTML = containerHTML;

@@ -48,6 +48,22 @@ class BoundingBox {
     static fromJson(json) {
         return Object.assign(new BoundingBox(), json);
     }
+
+    static contains(box, coord) {
+        //console.log("BBOX", box)
+        // box: [x1,y1,x2,y2]
+        // coord: [x,y]
+        let x = coord.x;
+        let y = coord.y;
+        let c1 = {x:box[0], y:box[1]};
+        let c2 = {x:box[2], y:box[3]};
+        if ((x > c1.x && x < c2.x) || (x > c2.x && x < c1.x)) {
+            if ((y > c1.y && y < c2.y) || (y > c2.y && y < c1.y)) {
+                return true;
+            }
+        }
+        else {return false;}
+    }
 }
 
 let ctx;
@@ -96,7 +112,12 @@ function handleBoundingBox(coord, state) {
         case boundingBoxStates.clickedOnce:
             secondPos = coord;
             let bb = new BoundingBox(firstPos, secondPos);
-            boxes.push(bb);
+            boxes.push([
+                Math.round(firstPos.x), 
+                Math.round(firstPos.y), 
+                Math.round(secondPos.x), 
+                Math.round(secondPos.y)
+            ]);
             newState = boundingBoxStates.noClick;
         default:
             break;
