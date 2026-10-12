@@ -344,6 +344,7 @@ let screen_transition_bbox_dictionary_data = {
 
 let internetScreenIds = [
     "home",
+    "home2",
     "wiki",
     "paint",
     "exit",
@@ -404,6 +405,7 @@ let internetClickBoxIds = [
 
 let internetScreenFilenames = [
 "home.png",
+"home2.png",
 "wiki.png",
 "paint.png",
 "exit.png",
@@ -466,6 +468,7 @@ let clickBoxLookup = {
     "home_bet36meow": [84, 535, 269, 711],
     "home_milkroad": [456, 355, 655, 527],
     "home_meowtube": [86, 170, 288, 342],
+    "home_2": [408, 765, 82, 727],
 
     "bet36_golf": [257, 291, 955, 541],
     "bet36_flapjack": [254, 565, 499, 798],
@@ -476,10 +479,7 @@ let clickBoxLookup = {
 
 
 let gthrth = [
-[257, 291, 955, 541],
-[254, 565, 499, 798],
-[528, 565, 772, 796],
-[843, 259, 1, 112],
+[408, 765, 82, 727],
 ]
 
 
@@ -525,6 +525,7 @@ home, askfloppa, home_askfloppa
 home, bet36meow, home_bet36meow
 home, milkroad, home_milkroad
 home, meowtube, home_meowtube
+home, home2, home_2,
 bet36meow, betgolf, bet36_golf,
 bet36meow, betflapjack, bet36_flapjack,
 bet36meow, betbingo, bet36_bingo

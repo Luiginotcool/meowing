@@ -18,7 +18,7 @@ function draw() {
     }
 
     if (Screen.currentScreen.internetPage) {
-        drawInternet();
+        //drawInternet();
     }
 
 
@@ -160,6 +160,7 @@ function drawBackground() {
     //let bgImg = new Image();
     //bgImg.src = `../assets/${currentScreen}`;
     //console.log(Screen.currentScreen.filename)
+    
     let bgImg = document.getElementById(Screen.currentScreen.filename);
     ctx.drawImage(bgImg, 0, 0, ctx.canvas.width, ctx.canvas.height);
 }

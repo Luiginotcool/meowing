@@ -1,6 +1,6 @@
-const MAKE_BBOX = false;
+const MAKE_BBOX = true;
 const MAKE_POS_ARRAY = false;
-const DRAW_SCENE_BOXES = true;
+const DRAW_SCENE_BOXES = false;
 
 
 
