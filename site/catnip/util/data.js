@@ -572,6 +572,13 @@ betbingo, bet36meow, bet_bet36meow
 `;
 
 
+let milkroadBuyBoxData = [
+[1059, 321, 1232, 474],
+[1060, 485, 1231, 636],
+[1060, 647, 1233, 796],
+]
+
+
 
 
 
@@ -596,7 +603,7 @@ let counterImageCorner = {"x": 10, "y": 120}
 let counterImagePadding = 3;
 let counterImageWidth = 60;
 let counterImageHeight = 60;
-let numCounterImages = 4;
+let numCounterImages = 5;
 
 
 

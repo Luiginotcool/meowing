@@ -26,7 +26,8 @@ plantnamesArray = [
     "shroom",
     "tomato",
     "citridora",
-    "catmint"
+    "catmint",
+    "coffee"
 ]
 
 

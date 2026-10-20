@@ -10,6 +10,7 @@ let saveData = {
 
 
 function saveGame(player, potArray) {
+    //console.log(JSON.stringify(player))
     localStorage.setItem("player", JSON.stringify(player));
     localStorage.setItem("potArray", JSON.stringify(potArray));
     localStorage.setItem("time", JSON.stringify(new Date().getTime()))
@@ -24,4 +25,9 @@ function wipeSave() {
         "player": null,
         "potArray": null
     }
+}
+
+function testSave() {
+    let test = `{"cursorState":0,"seeds":2,"plants":[140, 27,12,2,0],"heldItem":{"type":"none","name":"none"}}`
+    localStorage.setItem("player", test)
 }

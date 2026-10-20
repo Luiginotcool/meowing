@@ -1,7 +1,3 @@
-const MAKE_BBOX = true;
-const MAKE_POS_ARRAY = false;
-const DRAW_SCENE_BOXES = false;
-
 
 
 
@@ -63,6 +59,7 @@ function gamesetup() {
         new Seed("mushroom", "shroom", 1),
         new Seed("citridora", "citridora", 2),
         new Seed("catmint", "catmint", 3),
+        new Seed("coffee", "coffee", 4)
     ];
 
     Seed.seed_distribution = {
@@ -70,6 +67,7 @@ function gamesetup() {
         mushroom: 5,
         citridora: 10,
         catmint: 15,
+        coffee: 100
     }
 
 
@@ -77,7 +75,8 @@ function gamesetup() {
         tomato: [3,5],
         mushroom: [1,2],
         citridora: [1,2],
-        catmint: [1,3]
+        catmint: [1,3],
+        coffee: [2,5]
     }
 
 
@@ -137,7 +136,19 @@ function gamesetup() {
     // Load player data
     //
 
+    
+
     player = saveData.player || new Player();
+    // Check if new plants are undefined
+    console.log(saveData.player)
+    //player.plants = padArrayEnd(player.plants, Seed.seeds.length);
+    console.log(player.plants)
+    for (let i = 0; i < Seed.seeds.length; i++) {
+        if (player.plants[i] == undefined) {
+            player.plants[i] = 0;
+        }
+    }
+    //console.log(player.plants)
     if (saveData.potArray) {
         potArrayData = saveData.potArray;
         potArray = potArrayDataToArray(potArrayData);
