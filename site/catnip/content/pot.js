@@ -52,6 +52,13 @@ class Pot {
     }
 
     getLoot() {
+        let table = Seed.seed_loot_table[this.getSeedName()];
+        let n = table.length;
+        let r = Math.floor(Math.random() * n);
+        return table[r];
+    }
+
+    getLootOld() {
         let [min, max] = Seed.seed_loot_table[this.getSeedName()];
         let range = max - min;
         let r = min + Math.floor(Math.random() * (range));

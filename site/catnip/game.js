@@ -72,12 +72,12 @@ function gamesetup() {
 
 
     Seed.seed_loot_table = {
-        tomato: [3,5],
-        mushroom: [1,2],
-        citridora: [1,2],
-        catmint: [1,3],
-        coffee: [2,5]
-    }
+        tomato: [3,3,4,4,5],
+        mushroom: [1,1,1,2],
+        citridora: [1,1,2],
+        catmint: [1,1,2,2,3],
+        coffee: [1,2,2]
+    };
 
 
     //
@@ -183,7 +183,10 @@ function gameloop(timestamp) {
     //writeInfo(player);
     saveTick++;
     if (saveTick > 60) {
-        saveGame(player, potArray);
+        if (AUTOSAVE) {
+            saveGame(player, potArray);
+        }
+
         saveTick = 0;
         //console.log("Saving...")
     }
