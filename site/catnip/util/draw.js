@@ -21,6 +21,8 @@ function draw() {
         //drawInternet();
     }
 
+    handleScreensDraw();
+
 
 
     if (DRAW_SCENE_BOXES) {
@@ -130,6 +132,39 @@ function drawUI() {
             plantItem.draw(screenMouseCoord.x - counterImageWidth/2, screenMouseCoord.y - counterImageHeight/2);
         }
     }) 
+
+    // Draw meowcoin overlay
+    drawMeowcoin();
+
+
+}
+
+
+function drawMeowcoin() {
+    ctx.fillStyle = "rgba(0.5, 0.5, 0.5, 0.25)";
+    let boxLeft = canvas.width - meowcoinRight - meowcoinBoxWidth - 2*meowcoinBoxPadding;
+    let meowcoinLeft = canvas.width-meowcoinRight-meowcoinWidth-meowcoinBoxPadding;
+    ctx.fillRect(
+        boxLeft,
+        meowcoinTop,
+        meowcoinBoxWidth + 2*meowcoinBoxPadding,
+        meowcoinWidth + 2*meowcoinBoxPadding
+    )
+    ctx.strokeRect(
+        boxLeft,
+        meowcoinTop,
+        meowcoinBoxWidth + 2*meowcoinBoxPadding,
+        meowcoinWidth + 2*meowcoinBoxPadding
+    )
+    ctx.drawImage(
+        getSpriteAsset("meowcoin.png"), 
+        meowcoinLeft, 
+        meowcoinTop+meowcoinBoxPadding, 
+        meowcoinWidth, 
+        meowcoinWidth
+    )
+    ctx.fillStyle = "#000000"
+    ctx.fillText(`${player.money}`, boxLeft+meowcoinBoxPadding, meowcoinTop+meowcoinBoxPadding+30+7)
 }
 
 

@@ -182,9 +182,11 @@ class Seed {
     }
 
     static fromName(seedName) {
+        let newseed = Seed.None;
         Seed.seeds.forEach((seed) => { 
-            if (seed.name == seedName) { return seed; }
-        })
+            if (seed.name == seedName) { newseed = seed; }
+        });
+        return newseed;
     }
 
     static fromJson(json) {

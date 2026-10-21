@@ -350,7 +350,6 @@ let internetScreenIds = [
     "exit",
     "askfloppa",
     "bet36meow",
-    "milkroad",
     "meowtube",
     "betgolf",
     "betflapjack",
@@ -411,7 +410,6 @@ let internetScreenFilenames = [
 "exit.png",
 "askfloppa.png",
 "bet36meow.png",
-"milkroad.png",
 "meowtube.png",
 "betgolf.png",
 "betflapjack.png",
@@ -437,10 +435,10 @@ let internetScreenFilenames = [
 
 
 let clickBoxLookup = {
-    "milkroad_buy": [100, 200, 500, 500],
     "milkbuy_2": [400, 650, 500, 700],
     "milkbuy_3": [400, 650, 500, 700],
-    "milkroad_sell": [510, 200, 910, 500],
+    "milkroad_sell": [975, 191, 668, 124],
+    "milkroad_buy": [975, 191, 668, 124],
     "meowtube_videos1": [100, 200, 500, 500],
     "meowvids_2": [400, 650, 500, 700],
     "meowclip_1": [100, 150, 250, 300],
@@ -479,7 +477,8 @@ let clickBoxLookup = {
 
 
 let gthrth = [
-[408, 765, 82, 727],
+[824, 125, 974, 192],
+
 ]
 
 
@@ -523,16 +522,14 @@ nightgarden, home, laptop_2,
 let internetGraphString = `
 home, askfloppa, home_askfloppa
 home, bet36meow, home_bet36meow
-home, milkroad, home_milkroad
+home, milkbuy, home_milkroad
 home, meowtube, home_meowtube
 home, home2, home_2,
 bet36meow, betgolf, bet36_golf,
 bet36meow, betflapjack, bet36_flapjack,
 bet36meow, betbingo, bet36_bingo
-milkroad, milkbuy, milkroad_buy
 milkbuy, milkbuy2, milkbuy_2
 milkbuy2, milkbuy3, milkbuy_3
-milkroad, milksell, milkroad_sell
 meowtube, meowvids1, meowtube_videos1
 meowvids1, meowvids2, meowvids_2
 meowvids1, meowclip1, meowclip_1
@@ -562,13 +559,12 @@ meowclip9, meowtube, meowclip_meowtube
 meowclip10, meowtube, meowclip_meowtube
 meowvids1, meowtube, meowclip_meowtube
 meowvids2, meowtube, meowclip_meowtube
-milkbuy, milkroad, milk_milkroad
-milkbuy2, milkroad, milk_milkroad
-milkbuy3, milkroad, milk_milkroad
-milksell, milkroad, milk_milkroad
 betgolf, bet36meow, bet_bet36meow
 betflapjack, bet36meow, bet_bet36meow
 betbingo, bet36meow, bet_bet36meow
+milkbuy, milksell, milkroad_sell,
+milksell, milkbuy, milkroad_buy,
+milksell, home, back_
 `;
 
 
@@ -592,18 +588,6 @@ let milkroadBuyBoxData = [
 
 
 
-
-let toolItemPadding = 3;
-let toolItemGridPadding = 10;
-let toolItemWidth = 100;
-let toolItemHeight = 100;
-let numToolItems = 3;
-
-let counterImageCorner = {"x": 10, "y": 120}
-let counterImagePadding = 3;
-let counterImageWidth = 60;
-let counterImageHeight = 60;
-let numCounterImages = 5;
 
 
 

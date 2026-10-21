@@ -14,7 +14,8 @@ filenamesArray = [
     "seed bag 2.png",
     "shears.png",
     "shears thumb.png",
-    "webpage header.png"
+    "webpage header.png",
+    "meowcoin.png"
 ]
 
 
@@ -61,3 +62,9 @@ gameScreenFilenames.forEach((filename) => {
 })
 
 assetsContainer.innerHTML = containerHTML;
+
+
+
+function getSpriteAsset(filename) {
+    return document.getElementById(filename);
+}

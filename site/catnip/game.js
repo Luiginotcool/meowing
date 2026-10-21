@@ -140,19 +140,18 @@ function gamesetup() {
 
     player = saveData.player || new Player();
     // Check if new plants are undefined
-    console.log(saveData.player)
-    //player.plants = padArrayEnd(player.plants, Seed.seeds.length);
-    console.log(player.plants)
     for (let i = 0; i < Seed.seeds.length; i++) {
         if (player.plants[i] == undefined) {
             player.plants[i] = 0;
         }
     }
+    if (!player.money) {player.money = 0;}
     //console.log(player.plants)
     if (saveData.potArray) {
         potArrayData = saveData.potArray;
         potArray = potArrayDataToArray(potArrayData);
     }
+    
 
 
     
@@ -230,7 +229,10 @@ function handleClick(event) {
         handleToolItem(normalCoord);
         handlePlantItem(screenCoord);
         handleScreens(screenCoord);
+        handleScreensLogic(screenCoord);
     } 
+
+
 
 
     drawUI();

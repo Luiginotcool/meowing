@@ -3,6 +3,7 @@ class Player {
     seeds;
     plants;
     heldItem;
+    money;
 
     constructor() {
         this.seeds = 2;
@@ -10,6 +11,7 @@ class Player {
         this.plants.fill(0); 
         this.heldItem = Item.none;
         this.cursorState = cursorStates.empty;
+        this.money = 0;
     }
 
     handleCursorState() {
