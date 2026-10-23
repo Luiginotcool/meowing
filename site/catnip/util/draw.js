@@ -44,7 +44,11 @@ function draw() {
         })
     }
 
-    drawFullscreenButton();
+
+    if (ALLOW_FULLSCREEN) {
+        drawFullscreenButton();
+    }
+    
 }
 
 

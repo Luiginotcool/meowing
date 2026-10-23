@@ -1,6 +1,6 @@
 let infoText;
 
-let debugPoints = [{x:500,y:200}];
+let debugPoints = [];
 
 function writeInfo(player) {
     let infoString = 

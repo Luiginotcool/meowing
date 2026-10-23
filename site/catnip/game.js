@@ -248,7 +248,9 @@ function handleClick(event) {
 }
 
 function handleDebug(coord) {
-    debugPoints.push(coord);
+    if (DRAW_DEBUG_POINTS) {
+        debugPoints.push(coord);
+    }
 }
 
 function handleFullscreen(coord) {

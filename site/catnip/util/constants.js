@@ -1,10 +1,10 @@
 const MAKE_BBOX = true;
 const MAKE_POS_ARRAY = false;
 const DRAW_SCENE_BOXES = false;
-const DRAW_DEBUG_POINTS = true;
+const DRAW_DEBUG_POINTS = false;
 
 const AUTOSAVE = true;
-const ALLOW_FULLSCREEN = true;
+const ALLOW_FULLSCREEN = false;
 
 const fullscreenBox = [1233, 796, 1167, 738];
 
