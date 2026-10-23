@@ -235,6 +235,7 @@ function handleClick(event) {
         handleScreens(screenCoord);
         handleScreensLogic(screenCoord);
         handleFullscreen(screenCoord);
+        handleDebug(screenCoord);
     } 
 
 
@@ -246,6 +247,9 @@ function handleClick(event) {
     
 }
 
+function handleDebug(coord) {
+    debugPoints.push(coord);
+}
 
 function handleFullscreen(coord) {
     console.log(App.isFullScreen)

@@ -156,6 +156,12 @@ function fillNormCircle(centre_, radius) {
     ctx.fill();
 }
 
+function fillCircle(centre, radius) {
+    ctx.beginPath();
+    ctx.arc(centre.x, centre.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+}
+
 
 function padArrayEnd(array, length, value = undefined) {
     return Object.assign(new Array(length).fill(value), array);

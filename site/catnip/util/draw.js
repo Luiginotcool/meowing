@@ -38,6 +38,11 @@ function draw() {
             ctx.strokeRect(box[0],box[1],box[2]-box[0],box[3]-box[1]);
         })
     }
+    if (DRAW_DEBUG_POINTS) {
+        debugPoints.forEach((point) => {
+            fillCircle(point, 5);
+        })
+    }
 
     drawFullscreenButton();
 }
