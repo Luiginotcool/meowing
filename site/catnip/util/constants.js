@@ -3,6 +3,9 @@ const MAKE_POS_ARRAY = false;
 const DRAW_SCENE_BOXES = false;
 
 const AUTOSAVE = true;
+const ALLOW_FULLSCREEN = true;
+
+const fullscreenBox = [1233, 796, 1167, 738];
 
 
 

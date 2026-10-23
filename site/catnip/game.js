@@ -234,6 +234,7 @@ function handleClick(event) {
         handlePlantItem(screenCoord);
         handleScreens(screenCoord);
         handleScreensLogic(screenCoord);
+        handleFullscreen(screenCoord);
     } 
 
 
@@ -243,6 +244,31 @@ function handleClick(event) {
     //writeInfo(player);
 
     
+}
+
+
+function handleFullscreen(coord) {
+    console.log(App.isFullScreen)
+    if (!ALLOW_FULLSCREEN || !BoundingBox.contains(fullscreenBox, coord)) {
+        return;
+    }
+     //                      ---     DISABLE FULLSCREEN     ---
+    if (!App.isFullScreen) {
+        App.isFullScreen = true;
+        gameContainer.requestFullscreen().catch((err) => {
+            App.isFullScreen = false;
+            console.error(`Error enabling fullscreen: ${err.message}`);
+        })
+
+    } else {
+        App.isFullScreen = false;  
+        document.exitFullscreen().catch((err) => {
+            App.isFullScreen = true;
+            console.error(`Error exiting fullscreen: ${err.message}`);
+        });
+ 
+    }
+
 }
 
 function handlePlantItem(coord) {

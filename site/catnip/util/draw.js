@@ -38,6 +38,8 @@ function draw() {
             ctx.strokeRect(box[0],box[1],box[2]-box[0],box[3]-box[1]);
         })
     }
+
+    drawFullscreenButton();
 }
 
 
@@ -51,7 +53,10 @@ function drawInternet() {
 }
 
 
-
+function drawFullscreenButton() {
+    ctx.fillStyle = "rgba(0.5,0.5,0.5,0.5)";
+    ctx.fillRect(fullscreenBox[0], fullscreenBox[1], fullscreenBox[2]-fullscreenBox[0], fullscreenBox[3]-fullscreenBox[1])
+}
 
 
 function drawUI() {
