@@ -263,7 +263,8 @@ function handleFullscreen(coord) {
         })
 
     } else {
-        App.isFullScreen = false;  
+        App.isFullScreen = false; 
+        setInfoText("Fullscreen disabled");
         document.exitFullscreen().catch((err) => {
             App.isFullScreen = true;
             setInfoText(`Error exiting fullscreen: ${err.message}`);
