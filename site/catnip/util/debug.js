@@ -12,3 +12,8 @@ function writeInfo(player) {
     infoString += `<br/> Item type: ${player.heldItem.type}     \t Item: ${player.heldItem.name}`
     infoText.innerHTML = infoString
 }
+
+
+function setInfoText(string) {
+    infoText.innerHTML = string;
+}

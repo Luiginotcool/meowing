@@ -255,8 +255,10 @@ function handleFullscreen(coord) {
      //                      ---     DISABLE FULLSCREEN     ---
     if (!App.isFullScreen) {
         App.isFullScreen = true;
+        setInfoText("Fullscreen enabled");
         gameContainer.requestFullscreen().catch((err) => {
             App.isFullScreen = false;
+            setInfoText(`Error enabling fullscreen: ${err.message}`);
             console.error(`Error enabling fullscreen: ${err.message}`);
         })
 
@@ -264,6 +266,7 @@ function handleFullscreen(coord) {
         App.isFullScreen = false;  
         document.exitFullscreen().catch((err) => {
             App.isFullScreen = true;
+            setInfoText(`Error exiting fullscreen: ${err.message}`);
             console.error(`Error exiting fullscreen: ${err.message}`);
         });
  
