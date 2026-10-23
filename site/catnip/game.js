@@ -154,6 +154,10 @@ function gamesetup() {
     
 
 
+    //      Setup screens
+    screensSetup();
+
+
     
 
     //saveGame(player, potArray);

@@ -109,7 +109,7 @@ function drawUI() {
         textY = y + counterImageHeight*0.8;
         ctx.font = "30px pixel";
         ctx.fillStyle = "#000000"
-        ctx.fillText(`${player.plants[i]}`, textX, textY)
+        ctx.fillText(`${player.plants[i]}`, textX, textY);
     })
 
     //      Draw Held item

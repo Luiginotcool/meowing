@@ -10,6 +10,7 @@ App.init = function() {
     App.canvas = document.getElementById("game-canvas");
     App.width = window.innerWidth;
     App.height = window.innerHeight;
+    App.isFullScreen = false;
 
 
     App.noLoop = false;
@@ -46,3 +47,26 @@ App.verbose = function(array) {
 }
 
 App.init();
+
+
+
+let gameContainer = document.getElementById("main-body");
+gameContainer.ondblclick = () => {
+    return; //                      ---     DISABLE FULLSCREEN     ---
+    if (!App.isFullScreen) {
+        App.isFullScreen = true;
+        gameContainer.requestFullscreen().catch((err) => {
+            App.isFullScreen = false;
+            console.error(`Error enabling fullscreen: ${err.message}`);
+        })
+
+    } else {
+        App.fullscreen = false;  
+        document.exitFullscreen().catch((err) => {
+            App.isFullScreen = true;
+            console.error(`Error enabling fullscreen: ${err.message}`);
+        });
+ 
+    }
+
+}
